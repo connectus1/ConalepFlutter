@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>907857702221-ii1utfkcjightr6aq4gdj957le8fd0oc.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.907857702221-ii1utfkcjightr6aq4gdj957le8fd0oc</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>907857702221-k6sb4mjcr7s44lv143d6uikqia22kji6.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC7YRNhF-mmDOE0g23FzuRv_zhP2-83cc0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>907857702221</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.ios.conalep360</string>
+	<key>PROJECT_ID</key>
+	<string>conalep360</string>
+	<key>STORAGE_BUCKET</key>
+	<string>conalep360.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:907857702221:ios:6bca597fe0e23b19d45b04</string>
+	<key>DATABASE_URL</key>
+	<string>https://conalep360.firebaseio.com</string>
+</dict>
+</plist>

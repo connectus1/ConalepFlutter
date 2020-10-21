@@ -1,4 +1,4 @@
-package com.conalep.ios_conalep360
+package com.ios.conalep360
 
 import io.flutter.embedding.android.FlutterActivity
 

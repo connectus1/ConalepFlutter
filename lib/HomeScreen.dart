@@ -1,102 +1,182 @@
+import 'dart:io';
+
+import 'package:Conalep360/PoliticaDePrivacidadScreen.dart';
+import 'package:Conalep360/RecorridoVirtualScreen.dart';
+import 'package:Conalep360/SettingsScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+import 'GoogleMapScreen.dart';
+import 'InicioScreen.dart';
+import 'package:link/link.dart';
+
+import 'PreferencesClass.dart';
+
+class HomeScreen extends StatefulWidget {
+
+  @override
+  HomeState createState() => HomeState();
+
+}
+
+class HomeState extends State<HomeScreen>{
+  int select_drawer = 0;
+  double size_icon = 23;
+
+  _getDrawerItemWidget(int position){
+
+    switch(position){
+      case 0: return InicioScreen();
+      case 1: return GoogleMapScreen();
+      case 2: return RecorridoVirtualScreen();
+      case 3: return SettingScreen();
+      case 4: return PoliticaDePrivacidadScreen();
+    }
+
+  }
+  
+  _setTextAppBar(int position){
+    switch(position){
+      case 0: return "Inicio";
+      case 1: return "Mapa";
+      case 2: return "Conalep 360";
+      case 3: return "Ajustes";
+      case 4: return "Politica De Privacidad";
+    }
+
+  }
+  
+  _onSelectItem(position){
+    setState((){
+      select_drawer = position;
+    });
+  }
+
+  void _showErrorSnackBar() {
+    Scaffold.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Oops... the URL couldn\'t be opened!'),
+      ),
+    );
+  }
+
+
+  @override
+  void initState() {
+    Preferences _pref = Preferences();
+    _pref.indexPlantel().then((value) => (){
+      position = value;
+    });
+  }
+
+  int position = 0;
+  setUrl(int position){
+
+    switch (position) {
+      case 0: return 'https://plantelmante.firebaseapp.com/';
+      case 1: return 'https://plantelmatamoros.firebaseapp.com/';
+      case 2: return 'https://plantelmiguel.firebaseapp.com/';
+      case 3: return 'https://plantelnuevolaredo.firebaseapp.com/';
+      case 4: return 'https://plantelriobravo.firebaseapp.com/';
+      case 5: return 'https://plantelreynosa.firebaseapp.com/';
+      case 6: return 'https://planteltampico.firebaseapp.com/';
+      case 7: return 'https://plantelvictoria.firebaseapp.com/';
+      case 8: return 'https://castmatamoros.firebaseapp.com/';
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MyApp(MediaQuery.of(context).size.width * 0.6);
-  }
-}
 
-//Esta clase se encarga de la pantalla que se muestra al usuario
-class MyApp extends MaterialApp {
-  double width;
 
-  MyApp(double width) {
-    this.width = width;
-  }
-
-  //El titulo de la aplicacion
-  @override
-  String get title => "Titulo de la aplicacion";
-
-  //utilizamos el widget Scaffold que modificamos sus parametros
-  @override
-  Widget get home => new Scaffold(
+    return MaterialApp(
+      home:  new Scaffold(
         appBar: AppBar(
-          title: Text("Inicio"),
+          title: Text(_setTextAppBar(select_drawer)),
+          actions: <Widget>[
+
+
+          ],
         ),
         drawer: Container(
-          width: width,
-          child: NavigationDrawer(),
-        ),
-        body:
-        Center(
-          child: Text("Hola Mundo"),
-        ),
+          width: MediaQuery.of(context).size.width * 0.6,
+          child: Drawer(
+            child: ListView(
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+              children: <Widget>[
+                Material(
+                    child: Center(
+                      child: Container(
+                        child: Image.asset(
+                          'assets/images/logo_app.png',
+                          height: 100,
+                        ),
+                      ),
+                    )),
 
-      );
+                ListTile(
+                  leading: Image.asset('assets/iconos_menu/icon_home.png',width: size_icon, height: size_icon,),
+                  title: Text('Inicio'),
+                  onTap: (){_onSelectItem(0);},
+                ),
+                ListTile(
+                  leading: Image.asset('assets/iconos_menu/ic_puntero.png',width: size_icon, height: size_icon,),
+                  title: Text('Mapa'),
+                  onTap: (){_onSelectItem(1);},
+                ),
 
-  //El tema de la aplicacion
-  @override
-    ThemeData get theme => ThemeData(
-    // Define the default brightness and colors.
-      brightness: Brightness.light,
-      primaryColor: Colors.green.shade900,
-      accentColor: Colors.green.shade800,
+                // Link(
+                //   child: ListTile(
+                //     leading: Icon(Icons.settings),
+                //     title: Text("Conalep 360°"),
+                //   ),
+                //   url: setUrl(position),
+                //   onError: _showErrorSnackBar,
+                // ),
 
-      // Define the default font family.
-      // fontFamily: 'Georgia',
 
-      // Define the default TextTheme. Use this to specify the default
-      // text styling for headlines, titles, bodies of text, and more.
-      // textTheme: TextTheme(
-      //   headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-      //   headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
-      //   bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
-      // ),
-  );
+                ListTile(
+                  leading: Image.asset('assets/iconos_menu/icono360.png',width: size_icon, height: size_icon,),
+                  title: Text('Conalep 360°'),
+                  onTap: (){_onSelectItem(2);},
+                ),
 
-}
+                // ListTile(
+                //   leading: Image.asset('assets/iconos_menu/icon_info.png',width: size_icon, height: size_icon,),
+                //   title: Text('Informacion'),
+                // ),
+                ListTile(
+                  leading: Image.asset('assets/iconos_menu/ic_settings.png',width: size_icon, height: size_icon,),
+                  title: Text('Ajustes'),
+                  onTap: (){_onSelectItem(3);},
+                ),
 
-class NavigationDrawer extends Drawer {
-  @override
-  Widget get child => ListView(
-        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-        children: <Widget>[
-          Material(
-              child: Center(
-            child: Container(
-              child: Image.asset(
-                'assets/images/logo_app.png',
-                height: 140,
-              ),
+                ListTile(
+                  leading: Image.asset('assets/iconos_menu/ic_info.png',width: size_icon, height: size_icon,),
+                  title: Text('Politica de privacidad'),
+                  onTap: (){
+                    _onSelectItem(4);
+                  },
+                ),
+              ],
             ),
-          )),
-          ListTile(
-            leading: Icon(Icons.message),
-            title: Text('Inicio'),
           ),
-          ListTile(
-            leading: Icon(Icons.account_circle),
-            title: Text('Mapa'),
-          ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Conalep 360°'),
-          ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Informacion'),
-          ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Ajustes'),
-          ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Politica de privacidad'),
-          ),
-        ],
-      );
+        ),
+        body: _getDrawerItemWidget(select_drawer),
+      ),
+      theme: ThemeData(
+
+        // Define the default brightness and colors.
+        brightness: Brightness.light,
+        primaryColor: Colors.green.shade900,
+        accentColor: Colors.green.shade800,
+
+      ),
+    );
+
+      // MyApp(MediaQuery.of(context).size.width * 0.6);
+  }
+
+
 }
