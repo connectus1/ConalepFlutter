@@ -18,10 +18,10 @@ class LoginScreen extends StatelessWidget {
   TextEditingController correoController = new TextEditingController();
   TextEditingController contraController = new TextEditingController();
 
-
-
-
   bool typeUser; //Variable que nos pasan desde el pageAnterior
+
+  var _firebaseRef = FirebaseDatabase().reference();
+
   LoginScreen({this.typeUser}); //Declara el constructor de la clase
 
   DatabaseReference ref;
@@ -36,12 +36,12 @@ class LoginScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              height: 120,
+              height: 90,
               child: Stack(
                 children: <Widget>[
                   Positioned(
                     child: Container(
-                      height: 100,
+                      height: 80,
 
                       decoration: BoxDecoration(
                         image: DecorationImage(
@@ -58,7 +58,7 @@ class LoginScreen extends StatelessWidget {
 
             // SizedBox(height: 0,),
             Center(child: Padding(
-              padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
+              padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[

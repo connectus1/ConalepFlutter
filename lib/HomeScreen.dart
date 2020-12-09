@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:Conalep360/PoliticaDePrivacidadScreen.dart';
 import 'package:Conalep360/RecorridoVirtualScreen.dart';
 import 'package:Conalep360/SettingsScreen.dart';
@@ -8,7 +6,6 @@ import 'package:flutter/material.dart';
 
 import 'GoogleMapScreen.dart';
 import 'InicioScreen.dart';
-import 'package:link/link.dart';
 
 import 'PreferencesClass.dart';
 
@@ -69,6 +66,11 @@ class HomeState extends State<HomeScreen>{
     });
   }
 
+  deleteUser(BuildContext context){
+      Preferences _pref = Preferences();
+      _pref.deleteUser(context);
+  }
+
   int position = 0;
   setUrl(int position){
 
@@ -95,7 +97,10 @@ class HomeState extends State<HomeScreen>{
         appBar: AppBar(
           title: Text(_setTextAppBar(select_drawer)),
           actions: <Widget>[
-
+              IconButton(
+                icon: Image.asset("assets/iconos_tutorial/ic_chat.png"),
+                onPressed: (){},
+              ),
 
           ],
         ),
@@ -126,15 +131,6 @@ class HomeState extends State<HomeScreen>{
                   onTap: (){_onSelectItem(1);},
                 ),
 
-                // Link(
-                //   child: ListTile(
-                //     leading: Icon(Icons.settings),
-                //     title: Text("Conalep 360°"),
-                //   ),
-                //   url: setUrl(position),
-                //   onError: _showErrorSnackBar,
-                // ),
-
 
                 ListTile(
                   leading: Image.asset('assets/iconos_menu/icono360.png',width: size_icon, height: size_icon,),
@@ -157,6 +153,13 @@ class HomeState extends State<HomeScreen>{
                   title: Text('Politica de privacidad'),
                   onTap: (){
                     _onSelectItem(4);
+                  },
+                ),
+
+                ListTile(
+                  title: Text("Cerrar Sesión"),
+                  onTap: (){
+                    deleteUser(context);
                   },
                 ),
               ],

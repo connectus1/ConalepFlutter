@@ -14,7 +14,6 @@ class PageCarrerasState extends State<PageCarreras>{
   List<List> datos =[
     ['autotronica.png','contabilidad.png','programacion.png'],//Carreras Mante
 
-
     ['controldecalidad.png','programacion.png','mantenimientodesistemaselectronicos.png','maquinas.png'],//Carreras Matamoros
 
     ['autotronica.png','contabilidad.png','programacion.png'],//Carreras Miguel Aleman
@@ -27,7 +26,16 @@ class PageCarrerasState extends State<PageCarreras>{
     ['administracion.png','expresiongraficadigital.png','programacion.png','mantenimientoautomovil.png'], //Carreras Victoria
     [''],//Cast Matamoros
   ];
-
+  List<List> name_carreras = [
+    ['Autotronica','Contabilidad','Informatica'],
+    ['Contabilidad','Informatica','Mantenimiento De Sistemas Electronicos','Maquinas'],
+    ['Autotronica','Contabilidad','Informatica'],
+    ['Contabilidad','Electromecanica','Informatica','Soporte y Mantenimiento De Computo'],
+    ['Informatica','Autotronica','Motores a Diesel','Refrigeracion y Climatizacion'],
+    ['Asistente Directivo','Electromecanica','Informatica','Mantenimiento de Siststemas Electronicos'],
+    ['Autotronica','Construccion','Informatica','Quimica'],
+    ['Administracion','Expresion Grafica Digital','Informatica','Mantenimiento de Automotriz'],
+  ];
 
   int indexPlantel = 0;
   @override
@@ -47,6 +55,7 @@ class PageCarrerasState extends State<PageCarreras>{
 
   @override
   Widget build(BuildContext context) {
+    double font_size = 14.0;
 
     print(indexPlantel.toString());
     if(( indexPlantel == 0) || (indexPlantel == 3)){
@@ -55,13 +64,31 @@ class PageCarrerasState extends State<PageCarreras>{
 
         children: <Widget>[
           Center(
-            child: Image.asset('assets/iconos_carreras/' + (datos.elementAt(indexPlantel).elementAt(0)).toString() ),
+
+            child:Column(
+              children: [
+                Image.asset('assets/iconos_carreras/' + (datos.elementAt(indexPlantel).elementAt(0)).toString(),height: 135.0,),
+                Text(name_carreras.elementAt(indexPlantel).elementAt(0),style: TextStyle(fontWeight: FontWeight.bold,fontSize: font_size),)
+              ],
+            ),
           ),
           Center(
-            child: Image.asset('assets/iconos_carreras/'+  (datos.elementAt(indexPlantel).elementAt(1)).toString()),
+
+            child:Column(
+              children: [
+                Image.asset('assets/iconos_carreras/' + (datos.elementAt(indexPlantel).elementAt(1)).toString(),height: 135.0,),
+                Text(name_carreras.elementAt(indexPlantel).elementAt(1),style: TextStyle(fontWeight: FontWeight.bold,fontSize: font_size),),
+              ],
+            ),
           ),
           Center(
-            child: Image.asset('assets/iconos_carreras/' +  (datos.elementAt(indexPlantel).elementAt(2)).toString()),
+
+            child:Column(
+              children: [
+                Image.asset('assets/iconos_carreras/' + (datos.elementAt(indexPlantel).elementAt(2)).toString(),height: 135.0, ),
+                Text(name_carreras.elementAt(indexPlantel).elementAt(2),style: TextStyle(fontWeight: FontWeight.bold,fontSize: font_size),),
+              ],
+            ),
           ),
 
         ],
@@ -71,16 +98,40 @@ class PageCarrerasState extends State<PageCarreras>{
         scrollDirection: Axis.horizontal,
         children: <Widget>[
           Center(
-            child: Image.asset('assets/iconos_carreras/' + (datos.elementAt(indexPlantel).elementAt(0)).toString() ),
+
+            child:Column(
+              children: [
+                Image.asset('assets/iconos_carreras/' + (datos.elementAt(indexPlantel).elementAt(0)).toString() ,height: 135.0,),
+                Text(name_carreras.elementAt(indexPlantel).elementAt(0),style: TextStyle(fontWeight: FontWeight.bold,fontSize: font_size),),
+              ],
+            ),
           ),
           Center(
-            child: Image.asset('assets/iconos_carreras/'+  (datos.elementAt(indexPlantel).elementAt(1)).toString()),
+
+            child:Column(
+              children: [
+                Image.asset('assets/iconos_carreras/' + (datos.elementAt(indexPlantel).elementAt(1)).toString() ,height: 135.0,),
+                Text(name_carreras.elementAt(indexPlantel).elementAt(1),style: TextStyle(fontWeight: FontWeight.bold,fontSize: font_size),),
+              ],
+            ),
           ),
           Center(
-            child: Image.asset('assets/iconos_carreras/' +  (datos.elementAt(indexPlantel).elementAt(2)).toString()),
+
+            child:Column(
+              children: [
+                Image.asset('assets/iconos_carreras/' + (datos.elementAt(indexPlantel).elementAt(2)).toString() ,height: 135.0,),
+                Text(name_carreras.elementAt(indexPlantel).elementAt(2),style: TextStyle(fontWeight: FontWeight.bold,fontSize: font_size),),
+              ],
+            ),
           ),
           Center(
-            child: Image.asset('assets/iconos_carreras/'+ (datos.elementAt(indexPlantel).elementAt(3)).toString()),
+
+            child:Column(
+              children: [
+                Image.asset('assets/iconos_carreras/' + (datos.elementAt(indexPlantel).elementAt(3)).toString() ,height: 135.0,),
+                Text(name_carreras.elementAt(indexPlantel).elementAt(3),style: TextStyle(fontWeight: FontWeight.bold,fontSize: font_size),),
+              ],
+            ),
           ),
 
         ],

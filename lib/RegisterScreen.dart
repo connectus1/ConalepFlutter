@@ -31,15 +31,15 @@ class RegisterScreen extends StatelessWidget {
           children: <Widget>[
 
             Container(
-              height: 120,
+              height: 90,
               child: Stack(
                 children: <Widget>[
                   Positioned(
                     child: Container(
-                      height: 120,
+                      height: 80,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                           image: AssetImage('assets/images/banner.png'),
                         ),
                       ),
@@ -216,7 +216,7 @@ class RegisterScreen extends StatelessWidget {
                             consultaFirebase(context);
                           },
                           color: Colors.green[900],
-                          child: Text('Login', style: TextStyle(color: Colors.white)),
+                          child: Text('Registrar', style: TextStyle(color: Colors.white)),
                           elevation: 1.0,
                         ),
 

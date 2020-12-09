@@ -1,6 +1,8 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sms/sms.dart';
 
 import 'ObjetosInicioScreen/PagerCarreras.dart';
 import 'ObjetosInicioScreen/TextoMessenger.dart';
@@ -12,7 +14,7 @@ class InicioScreen extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-          child: SingleChildScrollView(
+          child:    SingleChildScrollView(
             child: Column(
               children: <Widget>[
                 titulo(),
@@ -24,7 +26,7 @@ class InicioScreen extends StatelessWidget{
                 SizedBox(height: 10,),
                 Container(
                   width: double.infinity,
-                  height: 180,
+                  height: 152,
                   child: PageCarreras(),
                 ),
 
@@ -36,8 +38,8 @@ class InicioScreen extends StatelessWidget{
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
-                      child: Image.asset('assets/iconos_menu/ic_puntero.png',width: 23, height: 23),
+                      padding: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
+                      child: Image.asset('assets/iconos_menu/ic_puntero.png',width: 20, height: 20),
                     ),
 
                     Container(
@@ -54,8 +56,8 @@ class InicioScreen extends StatelessWidget{
                   children: <Widget>[
 
                     Container(
-                      padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
-                      child: Image.asset('assets/iconos_inicio/ic_tel.png',width: 23, height: 23),
+                      padding: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
+                      child: Image.asset('assets/iconos_inicio/ic_tel.png',width: 20, height: 20),
                     ),
                     Container(
 
@@ -72,8 +74,8 @@ class InicioScreen extends StatelessWidget{
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
-                      child: Image.asset('assets/iconos_inicio/ic_messenger.png',width: 23, height: 23),
+                      padding: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
+                      child: Image.asset('assets/iconos_inicio/ic_messenger.png',width: 20, height: 20),
                     ),
                     Container(
 
@@ -87,24 +89,73 @@ class InicioScreen extends StatelessWidget{
 
                 SizedBox(height: 15,),
 
-                subtitulos("¿Quienes Somos?"),
+                subtitulos("Misión"),
                 SizedBox(height: 5,),
                 textos("El Colegio Nacional de Educación Profesional Técnica, tiene como Misión, formar mediante un modelo basado en competencias, a Profesionales Técnicos y Profesionales Técnicos Bachiller, capacita y evalúa con fines de certificación de competencias laborales y servicios tecnológicos para atender las necesidades del sector productivo del país."),
 
-                SizedBox(height: 40.0,)
+                SizedBox(height: 40.0,),
+
               ],
             ),
           ),
         ),
+      floatingActionButton:
+      FloatingActionButton(
+        onPressed: (){
+          _showMyDialog(context);
+        },
+        backgroundColor: Colors.red,
+        child:
+        Image.asset('assets/iconos_tutorial/ic_alerta.png',height: 40.0,),
+      ),
+
     );
   }
+
+  Future<void> _showMyDialog(BuildContext context) async {
+    return showCupertinoDialog(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                GoogleMap(initialCameraPosition: CameraPosition(
+                  target: LatLng(27.56,5.6),
+                )),
+                // GoogleMapScreen(),
+                Text("Probando alert"),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FloatingActionButton(
+              onPressed: (){
+                SmsSender sender = new SmsSender();
+                String address = '8334289826';
+
+                SmsMessage message = new SmsMessage(address, 'Hello flutter!');
+                sender.sendSms(message);
+
+              },
+              backgroundColor: Colors.red,
+              child: Image.asset('assets/iconos_tutorial/ic_alerta.png',height: 40.0,),
+
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
 //El texto que muestra el titulo
   Container titulo(){
     return Container(
       padding: EdgeInsets.fromLTRB(0, 10.0, 0.0, 0.0),
       alignment: Alignment.topCenter,
-      child: Text("Colegio Nacional De Educacion Profesional Tecninca",
+      child: Text("Colegio Nacional De Educación Profesional Tecnica",
         style: TextStyle(fontWeight: FontWeight.bold,
             fontSize: 20.0,
             color: Colors.green[900]),
@@ -151,7 +202,7 @@ class InicioScreen extends StatelessWidget{
     return Container(
       child: Center(
         child: Text(text,style: TextStyle(
-          color: Colors.green[800],
+          color: Colors.green[900],
           fontWeight: FontWeight.bold,
           fontSize: 16.0,
           ),
