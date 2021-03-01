@@ -6,14 +6,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'TypeUserScreen.dart';
 
 class Preferences{
-  final String _typeUser = "user";
-  final String _plantel = "index";
+
+  final String _plantel = "plantel";
   final String _correo = "correo";
   final String _contra = "contra";
   final String _registro = "registro";
 
-  final String _IdUser = "id";
+  final String _IdUser = "idUser";
   final String _nameUser = "nombre";
+
+  final String _type = "type";
 
   //--------------------------------
   // Metodo que devuleve el indice seleccionado del plantel
@@ -26,10 +28,10 @@ class Preferences{
   //--------------------------------
   // Metodo que devuleve el tipo de usuario
   //-------------------------------------
-  Future<bool> getTypeUser() async{
-    SharedPreferences _pref = await SharedPreferences.getInstance();
-    return await _pref.getBool(_typeUser) ?? false;
-  }
+  // Future<bool> getTypeUser() async{
+  //   SharedPreferences _pref = await SharedPreferences.getInstance();
+  //   return await _pref.getBool(_typeUser) ?? false;
+  // }
 
   //--------------------------------
   // Metodo que devuleve el correo del usuario
@@ -53,6 +55,32 @@ class Preferences{
   Future<bool> getReistro() async{
     SharedPreferences _pref = await SharedPreferences.getInstance();
     return await _pref.getBool(_registro) ?? false;
+  }
+
+  //--------------------------------
+  // Metodo que devuleve la id del usuario en la base de datos
+  //-------------------------------------
+  Future<String> getIdUser() async{
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    return await _pref.getString(_IdUser);
+  }
+
+  //------------------------------
+  //Metodo que devuelve el nombre del usuario
+  //--------------------------------
+  Future<bool> getNombre() async{
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    return await _pref.getBool(_nameUser) ?? false;
+  }
+
+  Future<String> getType() async{
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    return await _pref.getString(_type);
+  }
+
+  Future<String> getPlantel() async{
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    return await _pref.getString(_plantel);
   }
 
   void deleteUser(BuildContext context) async{

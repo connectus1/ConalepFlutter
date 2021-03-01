@@ -29,15 +29,15 @@ dependencies:
   webview_flutter: ^1.0.3
   flutter_linkify: ^3.1.3
   link: ^1.1.0
-  firebase_core: ^0.5.0+1
-  firebase_database: ^4.1.1
+  firebase_core: ^0.7.0
+  firebase_database: ^6.0.0
   intl: ^0.15.8
   fluttertoast: 7.1.1
   sms: ^0.2.4
-  geolocator: ^5.1.3
-
-
-
+  path: ^1.7.0
+  path_provider: ^1.6.27
+  sqflite: ^1.3.2+3
+  geolocator: ^6.2.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -70,6 +70,10 @@ flutter:
     - assets/iconos_carreras/
     #Estos son imagenes del inicio
     - assets/iconos_inicio/
+    #Estos son imagenes del chat
+    - assets/iconos_chat/
+    #Estos son imagenes para decidir el tipo de usuario
+    - assets/iconos_type/
 
 flutter_icons:
   image_path: 'assets/images/logo_app.png'

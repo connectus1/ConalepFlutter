@@ -1,3 +1,4 @@
+import 'package:Conalep360/ChatScreen.dart';
 import 'package:Conalep360/PoliticaDePrivacidadScreen.dart';
 import 'package:Conalep360/RecorridoVirtualScreen.dart';
 import 'package:Conalep360/SettingsScreen.dart';
@@ -19,6 +20,7 @@ class HomeScreen extends StatefulWidget {
 class HomeState extends State<HomeScreen>{
   int select_drawer = 0;
   double size_icon = 23;
+  String idUser;
 
   _getDrawerItemWidget(int position){
 
@@ -59,11 +61,33 @@ class HomeState extends State<HomeScreen>{
 
 
   @override
-  void initState() {
+  void initState(){
     Preferences _pref = Preferences();
-    _pref.indexPlantel().then((value) => (){
-      position = value;
+    // position =  _pref.indexPlantel();
+    // idUser = _pref.getIdUser();
+    //
+
+    _pref.getPlantel().then((value) => (){
+      setState(() {
+        switch(value){
+          case "Mante": position = 0; break;
+          case "Matamoros": position = 1; break;
+          case "Miguel Aleman": position = 2; break;
+          case "Nuevo Laredo": position = 3; break;
+          case "Rio Bravo": position = 4; break;
+          case "Reynosa":position = 5; break;
+          case "Tampico":position = 6; break;
+          case "Victoria": position = 7; break;
+          case "Cast Matamoros": position = 8; break;
+          }
+      });
+      // position = value;
     });
+
+    _pref.getIdUser().then((value) => (){
+      idUser = value as String;
+    });
+
   }
 
   deleteUser(BuildContext context){
@@ -73,7 +97,6 @@ class HomeState extends State<HomeScreen>{
 
   int position = 0;
   setUrl(int position){
-
     switch (position) {
       case 0: return 'https://plantelmante.firebaseapp.com/';
       case 1: return 'https://plantelmatamoros.firebaseapp.com/';
@@ -88,6 +111,8 @@ class HomeState extends State<HomeScreen>{
 
   }
 
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -99,7 +124,11 @@ class HomeState extends State<HomeScreen>{
           actions: <Widget>[
               IconButton(
                 icon: Image.asset("assets/iconos_tutorial/ic_chat.png"),
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => Chat(idUser,position),
+                  ));
+                },
               ),
 
           ],
@@ -138,10 +167,6 @@ class HomeState extends State<HomeScreen>{
                   onTap: (){_onSelectItem(2);},
                 ),
 
-                // ListTile(
-                //   leading: Image.asset('assets/iconos_menu/icon_info.png',width: size_icon, height: size_icon,),
-                //   title: Text('Informacion'),
-                // ),
                 ListTile(
                   leading: Image.asset('assets/iconos_menu/ic_settings.png',width: size_icon, height: size_icon,),
                   title: Text('Ajustes'),
@@ -157,6 +182,7 @@ class HomeState extends State<HomeScreen>{
                 ),
 
                 ListTile(
+                  leading: Image.asset('assets/iconos_menu/ic_logout.png',width: size_icon, height: size_icon,),
                   title: Text("Cerrar Sesión"),
                   onTap: (){
                     deleteUser(context);

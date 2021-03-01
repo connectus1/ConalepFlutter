@@ -6,11 +6,11 @@ import '../PreferencesClass.dart';
 class TextoTelefono extends StatefulWidget{
   @override
   TelefonoState createState() => TelefonoState();
-
-
 }
 
 class TelefonoState extends State<TextoTelefono>{
+  String txtPhone;
+
 
   int index = 0;
   List<String> telefonos = [
@@ -32,16 +32,31 @@ class TelefonoState extends State<TextoTelefono>{
 
   loadIndex(){
     Preferences _pref = Preferences();
-    _pref.indexPlantel().then((value) => {
+    _pref.getPlantel().then((value) => {
+
       setState((){
-        index = value;
+        switch(value){
+          case "Mante": txtPhone = '${telefonos.elementAt(0)}'; break;
+          case "Matamoros": txtPhone = '${telefonos.elementAt(1)}'; break;
+          case "Miguel Aleman": txtPhone = '${telefonos.elementAt(2)}'; break;
+          case "Nuevo Laredo": txtPhone = '${telefonos.elementAt(3)}'; break;
+          case "Rio Bravo": txtPhone = '${telefonos.elementAt(4)}'; break;
+          case "Reynosa": txtPhone = '${telefonos.elementAt(5)}'; break;
+          case "Tampico": txtPhone = '${telefonos.elementAt(6)}'; break;
+          case "Victoria": txtPhone = '${telefonos.elementAt(7)}'; break;
+          case "Cast Matamoros": txtPhone = '${telefonos.elementAt(8)}'; break;
+
+        }
+        // txtPhone = '${value}';
       }),
+
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Text(telefonos.elementAt(index).toString());
+    return Text('${txtPhone}');
+    // return Text(telefonos.elementAt(index).toString());
   }
 
 }

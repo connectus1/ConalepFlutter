@@ -19,9 +19,6 @@ class LoginScreen extends StatelessWidget {
   TextEditingController contraController = new TextEditingController();
 
   bool typeUser; //Variable que nos pasan desde el pageAnterior
-
-  var _firebaseRef = FirebaseDatabase().reference();
-
   LoginScreen({this.typeUser}); //Declara el constructor de la clase
 
   DatabaseReference ref;
@@ -251,11 +248,16 @@ class LoginScreen extends StatelessWidget {
   saveData(ItemUser user, String key) async{
     SharedPreferences _pref = await SharedPreferences.getInstance();
 
+    _pref.setBool("registro", true);
+
     _pref.setString("correo", user.getCorreo());
     _pref.setString("contra", user.getCorreo());
+    _pref.setString("plantel", user.getPlantel());
+
+
     _pref.setString("id", key);
-    _pref.setBool("registro", true);
     _pref.setString("nombre", user.getNombre());
+
     _pref.setBool("user", typeUser);
 
 
