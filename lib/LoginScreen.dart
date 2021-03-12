@@ -18,6 +18,7 @@ class LoginScreen extends StatelessWidget {
   TextEditingController correoController = new TextEditingController();
   TextEditingController contraController = new TextEditingController();
 
+
   bool typeUser; //Variable que nos pasan desde el pageAnterior
   LoginScreen({this.typeUser}); //Declara el constructor de la clase
 
@@ -26,6 +27,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     ref = FirebaseDatabase.instance.reference(); //obtenemos la referencia de la base de datos
 
     return Scaffold(
@@ -140,11 +142,15 @@ class LoginScreen extends StatelessWidget {
                                     border: Border(bottom: BorderSide(color: Colors.grey[200]))
                                 ),
                                 child: TextField(
+
+                                  obscureText: true,
                                   controller: contraController,
                                   decoration: InputDecoration(
+                                    labelText: 'password',
                                       hintText: "Contraseña",
                                       hintStyle: TextStyle(color: Colors.grey),
                                       border: InputBorder.none
+
                                   ),
                                 ),
                               ),

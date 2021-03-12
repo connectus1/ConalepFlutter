@@ -1,7 +1,6 @@
 import 'package:Conalep360/Animation/FadeAnimation.dart';
 import 'package:Conalep360/FirebaseObjects/Login/ItemUser.dart';
 import 'package:Conalep360/ObjectsRegistro/RegistroAlumnos/RegisterAlumno.dart';
-import 'package:Conalep360/RegisterScreen.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -117,26 +116,6 @@ class FirebaseLoginAlumno extends StatelessWidget{
                                 SizedBox(
                                   height: 20,
                                 ),
-                                // Container(
-                                //   child: Text(
-                                //     "Selecciona un plantel",
-                                //     style: TextStyle(
-                                //         color: Colors.green[900],
-                                //         fontSize: 16,
-                                //         fontWeight: FontWeight.bold),
-                                //     textAlign: TextAlign.start,
-                                //   ),
-                                //   padding: EdgeInsets.fromLTRB(10, 5, 0, 0),
-                                //   alignment: Alignment.centerLeft,
-                                // ),
-                                // Container(
-                                //   child: ListDown(),
-                                //   alignment: Alignment.centerLeft,
-                                //   padding: EdgeInsets.fromLTRB(10, 5, 20, 0),
-                                // ),
-                                // SizedBox(
-                                //   height: 25,
-                                // ),
                                 Container(
                                   child: Text(
                                     "Usuario",
@@ -171,6 +150,7 @@ class FirebaseLoginAlumno extends StatelessWidget{
                                           bottom: BorderSide(
                                               color: Colors.grey[200]))),
                                   child: TextField(
+                                    obscureText: true,
                                     controller: contraController,
                                     decoration: InputDecoration(
                                         hintText: "Contraseña",
@@ -303,70 +283,4 @@ class FirebaseLoginAlumno extends StatelessWidget{
     );
   }
 
-  //-----------------
-  //Dependiendo el valor de los datos asigna el hint del correo
-  //-----------------
-  // String setTxtCorreo() {
-  //   if (typeUser)
-  //     return "Correo Institucional";
-  //   else
-  //     return "Correo Electronico";
-  // }
 }
-//
-// class ListDown extends StatefulWidget {
-//   ListDown({Key key}) : super(key: key);
-//
-//   @override
-//   _ListDownState createState() => _ListDownState();
-// }
-//
-// class _ListDownState extends State<ListDown> {
-//   String oneElement = 'Mante';
-//
-//   List<String> _plantel = [
-//     'Mante',
-//     'Matamoros',
-//     'Miguel Aleman',
-//     'Nuevo Laredo',
-//     'Rio Bravo',
-//     'Reynosa',
-//     'Tampico',
-//     'Victoria',
-//     'Cast Matamoros'
-//   ];
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return DropdownButton<String>(
-//       isExpanded: true,
-//       value: oneElement,
-//       elevation: 16,
-//       style: TextStyle(color: Colors.blue[700], fontSize: 16),
-//       onChanged: (String newValue) {
-//         setState(() {
-//           print(_plantel.indexOf(newValue).toString());
-//           guardarIndex(_plantel.indexOf(newValue));
-//           oneElement = newValue;
-//         });
-//       },
-//       items: _plantel.map<DropdownMenuItem<String>>((String value) {
-//         return DropdownMenuItem<String>(
-//           value: value,
-//           child: Text(value),
-//         );
-//       }).toList(),
-//     );
-//   }
-//
-//   ///Guarda el indice del plantel seleccionado
-//   Future guardarIndex(int index) async {
-//     SharedPreferences preferences = await SharedPreferences.getInstance();
-//     await preferences.setInt('index', index); //Guarda el indice del DropDownButton
-//     }
-//
-//   @override
-//   void initState() {
-//     guardarIndex(0);
-//   }
-// }

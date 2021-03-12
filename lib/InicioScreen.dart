@@ -1,16 +1,36 @@
+import 'package:Conalep360/ConAlert/ContactScreen.dart';
+import 'package:Conalep360/ConAlert/Contacto.dart';
+import 'package:Conalep360/ConAlert/MenuButtonFloating.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_floating_menu/floating_menu_callback.dart';
+import 'package:flutter_floating_menu/floating_menu_item.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'package:permission_handler/permission_handler.dart';
+import 'package:sms/sms.dart';
+
+import 'ConAlert/DatabaseConalert.dart';
 import 'ObjetosInicioScreen/PagerCarreras.dart';
 import 'ObjetosInicioScreen/TextoMessenger.dart';
 import 'ObjetosInicioScreen/TextoTelefono.dart';
 import 'ObjetosInicioScreen/TextoUbicacion.dart';
 
-class InicioScreen extends StatelessWidget {
+class InicioScreen extends StatelessWidget implements FloatingMenuCallback {
+
+  // here we have a list of Floating menu items
+  final List<FloatingMenuItem> floatMenuList = [
+    FloatingMenuItem(id: 2, icon: "assets/iconos_conalert/add_contact.png", backgroundColor: Colors.blueAccent,),
+    FloatingMenuItem(id: 1, icon: "assets/iconos_tutorial/ic_alerta.png", backgroundColor: Colors.red),
+  ];
+
+  BuildContext contexto;
+  String locate;
+
   @override
   Widget build(BuildContext context) {
+    contexto = context;
+
     return Scaffold(
       body: Container(
         child: SingleChildScrollView(
@@ -105,80 +125,12 @@ class InicioScreen extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _getCurrentPosition();
-
-        },
-        backgroundColor: Colors.red,
-        child: Image.asset(
-          'assets/iconos_tutorial/ic_alerta.png',
-          height: 40.0,
-        ),
+      floatingActionButton: MenuButtonFloating(
+        menuList: floatMenuList,
+        callback:this,
+        btnBackgroundColor: Colors.red,
       ),
-    );
-  }
 
-  Future<void> _showMyDialog(BuildContext context) async {
-    return showCupertinoDialog(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return Container(
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                  child: Container(
-                    height: 10,
-                    child: GoogleMap(
-                      initialCameraPosition: CameraPosition(
-                        target: LatLng(27.56, 5.6),
-                  ),
-                ),
-              )),
-              Container(
-
-                child: Text("Texto de prueba",style: TextStyle(fontSize: 14),),
-              ),
-
-            ],
-          ),
-        );
-        GoogleMap(
-            initialCameraPosition: CameraPosition(
-          target: LatLng(27.56, 5.6),
-        ));
-
-        //
-        // return AlertDialog(
-        //   content: SingleChildScrollView(
-        //     child: ListBody(
-        //       children: <Widget>[
-        //         GoogleMap(initialCameraPosition: CameraPosition(
-        //           target: LatLng(27.56,5.6),
-        //         )),
-        //         // GoogleMapScreen(),
-        //         Text("Probando alert"),
-        //       ],
-        //     ),
-        //   ),
-        //   actions: <Widget>[
-        //     FloatingActionButton(
-        //       onPressed: (){
-        //         SmsSender sender = new SmsSender();
-        //         String address = '8334289826';
-        //
-        //         SmsMessage message = new SmsMessage(address, 'Hello flutter!');
-        //         sender.sendSms(message);
-        //
-        //       },
-        //       backgroundColor: Colors.red,
-        //       child: Image.asset('assets/iconos_tutorial/ic_alerta.png',height: 40.0,),
-        //
-        //     ),
-        //   ],
-        // );
-      },
     );
   }
 
@@ -246,14 +198,112 @@ class InicioScreen extends StatelessWidget {
     );
   }
 
+  _showMaterialDialog() {
+    showDialog(
+        context: contexto,
+        builder: (_) => new AlertDialog(
+          title: new Text("ConAlert",style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
+          content: new Text("¡Ayuda! puedo encontrarme en un situacion de riesgo"
+                        +", por favor comunicate  conmigo de inmediato."),
+          actions: <Widget>[
+            FloatingActionButton(onPressed: (){
+              _sendSms();
+            },
+            child: Image.asset('assets/iconos_tutorial/ic_alerta.png',height: 30,),
+              backgroundColor: Colors.red,
+            ),
+
+          ],
+        ));
+  }
+
+  @override
+  void onMenuClick(FloatingMenuItem floatingMenuItem) {
+    switch (floatingMenuItem.id) {
+      case 1:{
+        _getPermissions();
+      }
+        break;
+      case 2:{
+        Navigator.of(contexto).push(MaterialPageRoute(builder: (context) => ContactScreen(),));
+      }
+        break;
+
+    }
+  }
+
+  _getPermissions() async{
+    var _statusLocation = await Permission.location;
+
+    if(await _statusLocation.isGranted){
+      _getCurrentPosition();
+      _showMaterialDialog();
+    }else{
+      await _statusLocation.request();
+    }
+  }
+
   _getCurrentPosition() async{
     var position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
-    var latitude = position.latitude;
-    var longitude = position.longitude;
+    var latitude = await position.latitude;
+    var longitude = await position.longitude;
 
-    print(latitude.toString() + ":" + longitude.toString());
+
+    locate = await latitude.toString() + "," + longitude.toString();
 
   }
+  //
+  _sendSms() async{
 
+    var _db = DatabaseConalert();
+    await _db.initDB();
+
+    List<Contacto> contacts = await _db.getContactos();
+    if(contacts.isEmpty){
+      showDialog(
+          context: contexto,
+          builder: (_) => new AlertDialog(
+            title: new Text("ConAlert",style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
+            content: new Text("No existen contactos agregados"),
+          ));
+
+    }else{
+      int i = 0;
+      for(Contacto contacto in contacts){
+        i++;
+        SmsSender sender = new SmsSender();
+        String address = contacto.phone;
+
+        String msg = "";
+        if(locate.isEmpty){
+          msg = "¡Ayuda! puedo encontrarme en un situacion de riesgo"
+              +", por favor comunicate  conmigo.";
+        }else{
+          msg = "¡Ayuda! puedo encontrarme en un situacion de riesgo"
+              +", por favor comunicate  conmigo." + '\n' +
+              'maps.google.com/?q=${locate}';
+        }
+
+        SmsMessage message = new SmsMessage(address, msg);
+        sender.sendSms(message);
+
+
+        print(i+1);
+        print(contacts.length);
+
+        if(++i == contacts.length){
+          showDialog(
+              context: contexto,
+              builder: (_) => new AlertDialog(
+                title: new Text("ConAlert",style: TextStyle(color: Colors.red,fontWeight: FontWeight.bold),),
+                content: new Text("Alertas enviadas con exito"),
+              ));
+        }
+
+      }
+
+
+    }
+  }
 }

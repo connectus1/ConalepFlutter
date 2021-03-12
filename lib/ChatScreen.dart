@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-
 //******************************
 //Atributos De la clase
 //******************************
@@ -36,7 +35,7 @@ setUrl(int position){
 }
 
 class Chat extends StatefulWidget {
-  Chat(String id,int index){idUser = id; indexUser = index;}
+  Chat(int index){indexUser = index;}
 
   @override
   _ChatState createState() => _ChatState();
@@ -54,6 +53,8 @@ class _ChatState extends State<Chat> {
   //Hace referencia y despues la snapshot lo convierte en un Map<dynamic,dynamic> y los agrega a un list que retorna
   //******************************
   _getMensaje() async {
+    idUser = await Preferences().getIdUser();
+
     ref.child("Chat").child(idUser).once().then((DataSnapshot data) {
       if (data.value != null) {
         Map<dynamic, dynamic> map = data.value;
@@ -85,17 +86,15 @@ class _ChatState extends State<Chat> {
   //-----------------------------
   //cuando el state del objeto es removido
   //----------------------------
-  @override
-  void dispose() {
-
-    ref.onDisconnect();
-  }
+  // @override
+  // void dispose() {
+  //   ref.onDisconnect();
+  // }
 
   @override
   void initState() {
-
     Preferences().getNombre().then((value) => (){
-      nombre = value as String;
+      nombre = value;
     });
 
   }
@@ -105,11 +104,8 @@ class _ChatState extends State<Chat> {
   //****************************
   @override
   Widget build(BuildContext context) {
-    // ScrollPhysics physics = ScrollPhysics();
-    //
-    // _scrollController.createScrollPosition(physics, context, oldPosition)<
-    ///-----------------------
-    ref = FirebaseDatabase(databaseURL: setUrl(4)).reference();
+
+    ref = FirebaseDatabase(databaseURL: setUrl(indexUser)).reference();
     _getMensaje();
 
     return Scaffold(
@@ -117,9 +113,11 @@ class _ChatState extends State<Chat> {
       body: Container(
           child: Column(
             children: [
+
               Expanded(child: FutureBuilder(
                     future: db.initDB(),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      print("ListView" + snapshot.connectionState.toString());
                       if(snapshot.connectionState == ConnectionState.done){
                         return _showList(context);
                       }else
@@ -131,25 +129,32 @@ class _ChatState extends State<Chat> {
               ),
               SizedBox(width: 10,),
               Container(
+
                 padding: EdgeInsets.symmetric(horizontal: 8),
                 height: 70,
-                color: Colors.white,
+                color: Colors.green[900],
                 child: Row(
                   children: <Widget>[
 
                     Container(
+                      // color: Colors.white,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
                       width: MediaQuery.of(context).size.width * 0.82,
                       child: TextField(
+
                         decoration: InputDecoration(
-                            hintText: "Confirmar Contraseña",
+                          contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                            hintText: "Ingrese un mensaje",
                             hintStyle: TextStyle(color: Colors.grey),
-                            border: InputBorder.none
+                            border: InputBorder.none,
                         ),
                         controller: txtChat,
                       ),
                     ),
-
-
 
                     FloatingActionButton(
                       onPressed: _sendMessages,
@@ -202,7 +207,10 @@ class _ChatState extends State<Chat> {
     return FutureBuilder(
       future: db.getMessages(),
         builder: (BuildContext context, AsyncSnapshot<List<Message>> snapshot){
+        print("ListView" + snapshot.hasData.toString());
+
           if(snapshot.hasData){
+
             return ListView.builder(
               reverse: true,
               itemCount: snapshot.data.length,

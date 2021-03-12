@@ -26,14 +26,6 @@ class Preferences{
   }
 
   //--------------------------------
-  // Metodo que devuleve el tipo de usuario
-  //-------------------------------------
-  // Future<bool> getTypeUser() async{
-  //   SharedPreferences _pref = await SharedPreferences.getInstance();
-  //   return await _pref.getBool(_typeUser) ?? false;
-  // }
-
-  //--------------------------------
   // Metodo que devuleve el correo del usuario
   //-------------------------------------
   Future<String> getCorreo() async{
@@ -68,9 +60,9 @@ class Preferences{
   //------------------------------
   //Metodo que devuelve el nombre del usuario
   //--------------------------------
-  Future<bool> getNombre() async{
+  Future<String> getNombre() async{
     SharedPreferences _pref = await SharedPreferences.getInstance();
-    return await _pref.getBool(_nameUser) ?? false;
+    return await _pref.getString(_nameUser);
   }
 
   Future<String> getType() async{

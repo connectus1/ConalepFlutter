@@ -20,7 +20,7 @@ class HomeScreen extends StatefulWidget {
 class HomeState extends State<HomeScreen>{
   int select_drawer = 0;
   double size_icon = 23;
-  String idUser;
+
 
   _getDrawerItemWidget(int position){
 
@@ -80,13 +80,17 @@ class HomeState extends State<HomeScreen>{
           case "Victoria": position = 7; break;
           case "Cast Matamoros": position = 8; break;
           }
+          // print("Value2: " + value);
       });
       // position = value;
     });
 
-    _pref.getIdUser().then((value) => (){
-      idUser = value as String;
-    });
+    // _pref.getIdUser().then((value) => (){
+    //   setState(() {
+    //     print("Value: " + value);
+    //     idUser = "${value}";
+    //   });
+    // });
 
   }
 
@@ -96,20 +100,21 @@ class HomeState extends State<HomeScreen>{
   }
 
   int position = 0;
-  setUrl(int position){
-    switch (position) {
-      case 0: return 'https://plantelmante.firebaseapp.com/';
-      case 1: return 'https://plantelmatamoros.firebaseapp.com/';
-      case 2: return 'https://plantelmiguel.firebaseapp.com/';
-      case 3: return 'https://plantelnuevolaredo.firebaseapp.com/';
-      case 4: return 'https://plantelriobravo.firebaseapp.com/';
-      case 5: return 'https://plantelreynosa.firebaseapp.com/';
-      case 6: return 'https://planteltampico.firebaseapp.com/';
-      case 7: return 'https://plantelvictoria.firebaseapp.com/';
-      case 8: return 'https://castmatamoros.firebaseapp.com/';
-    }
 
-  }
+  // setUrl(int position){
+  //   switch (position) {
+  //     case 0: return 'https://plantelmante.firebaseapp.com/';
+  //     case 1: return 'https://plantelmatamoros.firebaseapp.com/';
+  //     case 2: return 'https://plantelmiguel.firebaseapp.com/';
+  //     case 3: return 'https://plantelnuevolaredo.firebaseapp.com/';
+  //     case 4: return 'https://plantelriobravo.firebaseapp.com/';
+  //     case 5: return 'https://plantelreynosa.firebaseapp.com/';
+  //     case 6: return 'https://planteltampico.firebaseapp.com/';
+  //     case 7: return 'https://plantelvictoria.firebaseapp.com/';
+  //     case 8: return 'https://castmatamoros.firebaseapp.com/';
+  //   }
+  //
+  // }
 
 
 
@@ -126,7 +131,7 @@ class HomeState extends State<HomeScreen>{
                 icon: Image.asset("assets/iconos_tutorial/ic_chat.png"),
                 onPressed: (){
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Chat(idUser,position),
+                    builder: (context) => Chat(position),
                   ));
                 },
               ),
@@ -204,7 +209,6 @@ class HomeState extends State<HomeScreen>{
       ),
     );
 
-      // MyApp(MediaQuery.of(context).size.width * 0.6);
   }
 
 
