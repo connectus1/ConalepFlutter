@@ -1,3 +1,4 @@
+import 'package:Conalep360/ObjetosChat/ListViewChat.dart';
 import 'package:Conalep360/PreferencesClass.dart';
 import 'package:Conalep360/SQLiteObjects/DatabaseProvider.dart';
 import 'package:Conalep360/SQLiteObjects/Message.dart';
@@ -45,6 +46,8 @@ class Chat extends StatefulWidget {
 //Esta clase se encarga del State de la clase Chat
 //****************************************
 class _ChatState extends State<Chat> {
+
+  ListViewChat _chat = ListViewChat();
   var db = DatabaseProvider();
   String nombre;
 
@@ -67,6 +70,8 @@ class _ChatState extends State<Chat> {
           //Si el mensaje proviene de la institucion entonces se guarda el mensahe
           if(mensaje.nombre.compareTo("CONALEP") == 0 ){
             guardarMensaje(mensaje);
+            _chat.addMessage(mensaje);
+
             ref.child("Chat").child(idUser).child(map.keys.elementAt(i)).remove();//Como ya se agrego al SQL se elimina de Firebase
           }
 
@@ -83,14 +88,6 @@ class _ChatState extends State<Chat> {
     await db.saveMessage(mensaje);
   }
 
-  //-----------------------------
-  //cuando el state del objeto es removido
-  //----------------------------
-  // @override
-  // void dispose() {
-  //   ref.onDisconnect();
-  // }
-
   @override
   void initState() {
     Preferences().getNombre().then((value) => (){
@@ -104,29 +101,16 @@ class _ChatState extends State<Chat> {
   //****************************
   @override
   Widget build(BuildContext context) {
-    print(indexUser);
 
     ref = FirebaseDatabase(databaseURL: setUrl(indexUser)).reference();
     _getMensaje();
 
     return Scaffold(
-
       body: Container(
           child: Column(
             children: [
+              Expanded(child: _chat),
 
-              Expanded(child: FutureBuilder(
-                    future: db.initDB(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if(snapshot.connectionState == ConnectionState.done){
-                        return _showList(context);
-                      }else
-                        return Container(
-                          child: CircularProgressIndicator(),
-                        );
-                    }
-                ),
-              ),
               SizedBox(width: 10,),
               Container(
 
@@ -137,7 +121,6 @@ class _ChatState extends State<Chat> {
                   children: <Widget>[
 
                     Container(
-                      // color: Colors.white,
                       decoration: BoxDecoration(
                         color: Colors.white,
                           border: Border.all(color: Colors.white),
@@ -191,153 +174,15 @@ class _ChatState extends State<Chat> {
 
       Message _mensajeAux = Message(fecha: DateFormat().format(DateTime.now()),mensaje: newData,nombre: "Luis");
       ref.child("Chat").child(idUser).push().set(_mensajeAux.toMap());
-      guardarMensaje(_mensajeAux);
+
+      guardarMensaje(_mensajeAux); //Lo guarda en la base de datos
+
+      _chat.addMessage(_mensajeAux); //Lo anexa al ListView
 
 
       txtChat.clear();
     }
 
-  }
-
-  //------------------------------------
-  //Esta parte del codigo retorna un FutureBuilder que contiene un ListView.Builder para obtener los mensajes
-  //que se encuentran en la base de datos SQL y agrega de los que entran de Firebase
-  //-----------------------------------
-  _showList(BuildContext context){
-    return FutureBuilder(
-      future: db.getMessages(),
-        builder: (BuildContext context, AsyncSnapshot<List<Message>> snapshot){
-          if(snapshot.hasData){
-            return ListView.builder(
-              reverse: true,
-              itemCount: snapshot.data.length,
-              itemBuilder: (BuildContext context, int index) {
-                List<Message> message = snapshot.data;
-
-                //Verifica que el nombre sea
-                if (message.elementAt((message.length-1)-index).nombre.compareTo("CONALEP") == 0) {
-                  return _crearItem(context, message.elementAt((message.length-1) - index));
-                }
-                else
-                  return _crearItemUser(context, message.elementAt((message.length-1) - index));
-
-              },
-            );
-          }else
-            return Center(
-              child: Text("Loading...."),
-            );
-        }
-    );
-  }
-
-  //--------------------------------------
-  //Crea el objeto grafico para los widget del plantel
-  //----------------------------------
-  Widget _crearItem(BuildContext context, Message mensaje){
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-
-      //-------------------
-      // codigo para la foto del mensaje
-      //--------------------
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.fromLTRB(5, 0.0, 5.0, 0.0),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            boxShadow:[ BoxShadow(
-                color: Colors.white.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 5,
-            ),
-            ],
-          ),
-          child: CircleAvatar(radius: 17,
-            backgroundImage: AssetImage('assets/images/logo_app.png'),
-          )
-        ),
-
-
-        //--------------------
-        //Codigo para crear el item del mensaje
-        //----------------------
-        Container(
-          alignment: Alignment.topLeft,
-          constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * 0.8,
-          ),
-          padding: EdgeInsets.all(10),
-          margin: EdgeInsets.symmetric(vertical: 10),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 5,
-            ),
-          ],
-          ),
-          child: Text('${mensaje.mensaje}',style: TextStyle(color: Colors.black),),
-        ),
-      ],
-    );
-  }
-
-  //-----------------------------------------------------
-  //Crea un item para Usuario
-  //-----------------------------------------------
-  Widget _crearItemUser(BuildContext context, Message mensaje){
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-
-        //--------------------
-        //Codigo para crear el item del mensaje
-        //----------------------
-        Container(
-          alignment: Alignment.topRight,
-          constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * 0.8,
-          ),
-        // EdgeInsets.symmetric(vertical: 10,horizontal: 15)
-          padding: EdgeInsets.all(10),
-          margin: EdgeInsets.fromLTRB(35, 10, 0.0, 10),
-          decoration: BoxDecoration(
-            color: Colors.green[300],
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 5,
-            ),
-            ],
-          ),
-          child: Text('${mensaje.mensaje}',style: TextStyle(color: Colors.white),),
-        ),
-
-        //-------------------
-        // codigo para la foto del mensaje
-        //--------------------
-        Container(
-            padding: EdgeInsets.fromLTRB(5, 0.0, 5.0, 0.0),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              boxShadow:[ BoxShadow(
-                color: Colors.white.withOpacity(0.5),
-                spreadRadius: 2,
-                blurRadius: 5,
-              ),
-              ],
-            ),
-            child: CircleAvatar(radius: 17,
-              backgroundImage: AssetImage('assets/images/logo_app.png'),
-            )
-        ),
-
-      ],
-    );
   }
 }
 
