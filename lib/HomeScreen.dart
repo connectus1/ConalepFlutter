@@ -51,48 +51,43 @@ class HomeState extends State<HomeScreen>{
     });
   }
 
-  void _showErrorSnackBar() {
-    Scaffold.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Oops... the URL couldn\'t be opened!'),
-      ),
-    );
-  }
+  // void _showErrorSnackBar() {
+  //   Scaffold.of(context).showSnackBar(
+  //     SnackBar(
+  //       content: Text('Oops... the URL couldn\'t be opened!'),
+  //     ),
+  //   );
+  // }
 
 
   @override
   void initState(){
-    Preferences _pref = Preferences();
-    // position =  _pref.indexPlantel();
-    // idUser = _pref.getIdUser();
-    //
+   _getPlantel();
+  }
 
-    _pref.getPlantel().then((value) => (){
-      setState(() {
-        switch(value){
-          case "Mante": position = 0; break;
-          case "Matamoros": position = 1; break;
-          case "Miguel Aleman": position = 2; break;
-          case "Nuevo Laredo": position = 3; break;
-          case "Rio Bravo": position = 4; break;
-          case "Reynosa":position = 5; break;
-          case "Tampico":position = 6; break;
-          case "Victoria": position = 7; break;
-          case "Cast Matamoros": position = 8; break;
-          }
-          // print("Value2: " + value);
-      });
-      // position = value;
+
+  _getPlantel() async {
+    Preferences _pref = await Preferences();
+    String value = await _pref.getPlantel();
+    int _position = 0;
+
+    switch(value){
+      case "Mante": _position = 0; break;
+      case "Matamoros": _position = 1; break;
+      case "Miguel Aleman": _position = 2; break;
+      case "Nuevo Laredo": _position = 3; break;
+      case "Rio Bravo": _position = 4; break;
+      case "Reynosa":_position = 5; break;
+      case "Tampico":_position = 6; break;
+      case "Victoria": _position = 7; break;
+      case "Cast Matamoros": _position = 8; break;
+    }
+    setState(() {
+      position = _position;
     });
 
-    // _pref.getIdUser().then((value) => (){
-    //   setState(() {
-    //     print("Value: " + value);
-    //     idUser = "${value}";
-    //   });
-    // });
-
   }
+
 
   deleteUser(BuildContext context){
       Preferences _pref = Preferences();
@@ -101,27 +96,9 @@ class HomeState extends State<HomeScreen>{
 
   int position = 0;
 
-  // setUrl(int position){
-  //   switch (position) {
-  //     case 0: return 'https://plantelmante.firebaseapp.com/';
-  //     case 1: return 'https://plantelmatamoros.firebaseapp.com/';
-  //     case 2: return 'https://plantelmiguel.firebaseapp.com/';
-  //     case 3: return 'https://plantelnuevolaredo.firebaseapp.com/';
-  //     case 4: return 'https://plantelriobravo.firebaseapp.com/';
-  //     case 5: return 'https://plantelreynosa.firebaseapp.com/';
-  //     case 6: return 'https://planteltampico.firebaseapp.com/';
-  //     case 7: return 'https://plantelvictoria.firebaseapp.com/';
-  //     case 8: return 'https://castmatamoros.firebaseapp.com/';
-  //   }
-  //
-  // }
-
-
 
   @override
   Widget build(BuildContext context) {
-
-
     return MaterialApp(
       home:  new Scaffold(
         appBar: AppBar(

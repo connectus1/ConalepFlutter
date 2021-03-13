@@ -53,6 +53,11 @@ class DatabaseProvider {
     return result.map((map) => Message.map(map)).toList();
   }
 
+  Future<dynamic> getMessages2() async {
+    List<Map<String,dynamic>> result = await _dataBase.query('chat');
+    return result.map((map) => Message.map(map)).toList();
+  }
+
   Future colse() async{
     var dbClient = await db;
     return await dbClient.close();

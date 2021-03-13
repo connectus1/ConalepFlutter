@@ -55,18 +55,11 @@ class TextoState extends State<TextoUbicacion>{
 
     });
 
-
-    // preferences.indexPlantel().then((value) => {
-    //   setState((){
-    //     index = value;
-    //   }),
-    // });
   }
 
   @override
   Widget build(BuildContext context) {
     return Text('${txtUbicacion}',style: TextStyle(),textAlign:TextAlign.justify,);
-    // return Text(direcciones.elementAt(index).toString(),style: TextStyle(),textAlign:TextAlign.justify,);
 
   }
 

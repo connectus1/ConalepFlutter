@@ -21,7 +21,7 @@ List<String> keys = new List();
 
 
 setUrl(int position){
-  switch (position) {
+  switch (position-1) {
     case 0: return 'https://conalep360-mante.firebaseio.com/';
     case 1: return 'https://conalep360-matamoros.firebaseio.com/';
     case 2: return 'https://conalep360-miguelaleman.firebaseio.com/';
@@ -104,6 +104,7 @@ class _ChatState extends State<Chat> {
   //****************************
   @override
   Widget build(BuildContext context) {
+    print(indexUser);
 
     ref = FirebaseDatabase(databaseURL: setUrl(indexUser)).reference();
     _getMensaje();
@@ -117,7 +118,6 @@ class _ChatState extends State<Chat> {
               Expanded(child: FutureBuilder(
                     future: db.initDB(),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      print("ListView" + snapshot.connectionState.toString());
                       if(snapshot.connectionState == ConnectionState.done){
                         return _showList(context);
                       }else
@@ -207,10 +207,7 @@ class _ChatState extends State<Chat> {
     return FutureBuilder(
       future: db.getMessages(),
         builder: (BuildContext context, AsyncSnapshot<List<Message>> snapshot){
-        print("ListView" + snapshot.hasData.toString());
-
           if(snapshot.hasData){
-
             return ListView.builder(
               reverse: true,
               itemCount: snapshot.data.length,
