@@ -14,11 +14,6 @@ class Message{
     this.nombre = obj["nombre"];
   }
 
-  // Map<String, dynamic> toMap() => {
-  //   "fecha": fecha,
-  //   "mensaje":mensaje,
-  //   "nombre": nombre,
-  // };
 
   String get _fecha => fecha;
   String get _mensaje => mensaje;

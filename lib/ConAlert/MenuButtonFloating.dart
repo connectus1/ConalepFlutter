@@ -51,7 +51,7 @@ class _FloatingMenuState extends State<MenuButtonFloating>
     return Align(
       alignment: Alignment.bottomRight,
       child: Container(
-        padding: EdgeInsets.only(right: 16, bottom: 16),
+        padding: EdgeInsets.only(right: 0, bottom: 45),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.end,

@@ -70,10 +70,6 @@ class RegisterAlumno extends StatelessWidget{
             SizedBox(height: 10),
             Expanded(
               child: Container(
-                // decoration: BoxDecoration(
-                //   color: Colors.white,
-                //   borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40)),
-                // ),
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(40.0, 0.0, 40.0, 40.0),
@@ -138,7 +134,6 @@ class RegisterAlumno extends StatelessWidget{
                                 TextField(
                                   decoration: InputDecoration(
                                       hintText: "Correo Institucional",
-
                                       hintStyle: TextStyle(color: Colors.grey),
                                       border: InputBorder.none
                                   ),
@@ -157,7 +152,6 @@ class RegisterAlumno extends StatelessWidget{
                                 TextField(
                                   decoration: InputDecoration(
                                       hintText: "Matricula",
-
                                       hintStyle: TextStyle(color: Colors.grey),
                                       border: InputBorder.none
                                   ),
@@ -191,6 +185,7 @@ class RegisterAlumno extends StatelessWidget{
                                         color: Colors.grey[200]))
                                 ),
                                 child: TextField(
+                                  obscureText: true,
                                   decoration: InputDecoration(
                                       hintText: "Contraseña",
                                       hintStyle: TextStyle(color: Colors.grey),
@@ -208,6 +203,7 @@ class RegisterAlumno extends StatelessWidget{
                                         color: Colors.grey[200]))
                                 ),
                                 child: TextField(
+                                  obscureText: true,
                                   decoration: InputDecoration(
                                       hintText: "Confirmar Contraseña",
                                       hintStyle: TextStyle(color: Colors.grey),
@@ -216,13 +212,10 @@ class RegisterAlumno extends StatelessWidget{
                                   controller: contra_confirmoController,
                                 ),
                               ),
-
-
                             ],
                           ),
                         )),
-                        // SizedBox(height: 40,),
-                        // FadeAnimation(1.5, Text("Forgot Password?", style: TextStyle(color: Colors.grey),)),
+
                         SizedBox(height: 40,),
 
                         MaterialButton(

@@ -24,21 +24,16 @@ class DatabaseConalert{
     return _dataBase;
   }
 
-
   //--------------------------------
   //Inicializamos la base de datos
   //----------------------------------
   initDB() async {
-
-    // String databasesPath = await getDatabasesPath();
-    // String path = join(databasesPath, 'chatConalep.db');
 
     Directory fileDirectory = await getApplicationDocumentsDirectory();
     String path = join(fileDirectory.path,"Conalert1.db");
 
     _dataBase =  await openDatabase(path,
         version: 1, // si se añaden tablas cambiarla,
-        // onOpen: (db) {},
         onCreate: (Database db, int version) async {
           await db.execute('CREATE TABLE conalert (name TEXT, phone TEXT)');
         });

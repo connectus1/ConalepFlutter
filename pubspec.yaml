@@ -81,6 +81,8 @@ flutter:
     - assets/iconos_type/
     #Estos son imagenes para las funciones de conalert
     - assets/iconos_conalert/
+    #Estos son imagenes para las funciones de bottomSheetRedes
+    - assets/iconos_redessociales/
 flutter_icons:
   image_path: 'assets/images/logo_app.png'
   android: true

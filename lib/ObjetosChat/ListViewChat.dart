@@ -171,5 +171,4 @@ class ViewState extends State<ListViewChat>{
     );
   }
 
-
 }

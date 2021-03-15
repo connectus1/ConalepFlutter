@@ -58,8 +58,7 @@ class RegisterTutor extends StatelessWidget{
                     child: Text("Registrate", style: TextStyle(
                         fontSize: 20, fontWeight: FontWeight.bold),),
                   ),
-                  // SizedBox(height: 10,),
-                  // FadeAnimation(1.3, Text("¡REGISTRATE!", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)),
+
                 ],
               ),
             ),),
@@ -134,6 +133,7 @@ class RegisterTutor extends StatelessWidget{
                                 ),
                                 child:
                                 TextField(
+
                                   decoration: InputDecoration(
                                       hintText: "Correo Institucional",
 
@@ -170,6 +170,7 @@ class RegisterTutor extends StatelessWidget{
                                         color: Colors.grey[200]))
                                 ),
                                 child: TextField(
+                                  obscureText: true,
                                   decoration: InputDecoration(
                                       hintText: "Contraseña",
                                       hintStyle: TextStyle(color: Colors.grey),
@@ -187,6 +188,7 @@ class RegisterTutor extends StatelessWidget{
                                         color: Colors.grey[200]))
                                 ),
                                 child: TextField(
+                                  obscureText: true,
                                   decoration: InputDecoration(
                                       hintText: "Confirmar Contraseña",
                                       hintStyle: TextStyle(color: Colors.grey),
@@ -196,15 +198,10 @@ class RegisterTutor extends StatelessWidget{
                                 ),
                               ),
 
-                              // ListView.builder(
-                              //
-                              // ),
-
                             ],
                           ),
                         )),
-                        // SizedBox(height: 40,),
-                        // FadeAnimation(1.5, Text("Forgot Password?", style: TextStyle(color: Colors.grey),)),
+
                         SizedBox(height: 40,),
 
                         MaterialButton(
@@ -257,17 +254,6 @@ class RegisterTutor extends StatelessWidget{
       }else{
 
         registerDatabase(context,ref);
-        // if(typeUser){
-        //
-        //   if(styleCorreoAlumno(correoController.text)){
-        //
-        //   }else{
-        //     showToast("Correo no aceptado");
-        //   }
-        //
-        // }else{
-        //   registerDatabase(context,ref,child);
-        // }
 
       }
 
@@ -291,8 +277,6 @@ class RegisterTutor extends StatelessWidget{
         SharedPreferences preferences = await SharedPreferences.getInstance();
         Tutor user = setDataUser(preferences.getString("plantel"));
 
-
-        // user.setPlantel(preferences.getString("plantel"));
 
         //Termino de registrar los datos en firebase
         ref.child("Registro_Visitas").push().set({
@@ -336,36 +320,10 @@ class RegisterTutor extends StatelessWidget{
       plantel: plantel,
     );
 
-    // user.setNombre(nombreController.text);
-    // user.setContra(contraController.text);
-    // user.setCorreo(correoController.text);
-    // user.set
     return user;
   }
 
-//-------------------------------------------------------
-//Metodo que se encarga de establecer el hint
-//-------------------------------------------------------
-// String setTxtCorreo() {
-//   if (typeUser) {
-//     return "Correo Institucional";
-//   } else {
-//     return "Correo electronico";
-//   }
-// }
-
-//-------------------------------------------------------
-//Metodo que se revisa el correo y sea institucional
-//-------------------------------------------------------
-// bool styleCorreoAlumno(String text){
-//   String estilo_correo = "conalep.edu.mx";
-//   return (text.indexOf(estilo_correo) != -1) ? true : false;
-// }
-
 }
-
-
-
 
 
 //-------------------------------------------------------

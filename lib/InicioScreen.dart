@@ -29,102 +29,147 @@ class InicioScreen extends StatelessWidget implements FloatingMenuCallback {
 
   @override
   Widget build(BuildContext context) {
+
     contexto = context;
 
     return Scaffold(
-      body: Container(
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              titulo(),
-              SizedBox(
-                height: 10,
-              ),
-              _primerTexto(),
-              SizedBox(
-                height: 10,
-              ),
-              subtitulos("Ofrecemos carreras en:"),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                width: double.infinity,
-                height: 152,
-                child: PageCarreras(),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              subtitulos("Contactanos"),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+      body: Column(
+        children: <Widget>[
+          Expanded(child: Container(
+            child: SingleChildScrollView(
+              child: Column(
                 children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
-                    child: Image.asset('assets/iconos_menu/ic_puntero.png',
-                        width: 20, height: 20),
+                  titulo(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _primerTexto(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  subtitulos("Ofrecemos carreras en:"),
+                  SizedBox(
+                    height: 10,
                   ),
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                    child: TextoUbicacion(),
+                    width: double.infinity,
+                    height: 152,
+                    child: PageCarreras(),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  subtitulos("Contactanos"),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
+                        child: Image.asset('assets/iconos_menu/ic_puntero.png',
+                            width: 20, height: 20),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                        child: TextoUbicacion(),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
+                        child: Image.asset('assets/iconos_inicio/ic_tel.png',
+                            width: 20, height: 20),
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                        child: TextoTelefono(),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
+                        child: Image.asset('assets/iconos_inicio/ic_messenger.png',
+                            width: 20, height: 20),
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                        child: TextoMessenger(),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  subtitulos("Misión"),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  textos(
+                      "El Colegio Nacional de Educación Profesional Técnica, tiene como Misión, formar mediante un modelo basado en competencias, a Profesionales Técnicos y Profesionales Técnicos Bachiller, capacita y evalúa con fines de certificación de competencias laborales y servicios tecnológicos para atender las necesidades del sector productivo del país."),
+                  SizedBox(
+                    height: 40.0,
                   ),
                 ],
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
-                    child: Image.asset('assets/iconos_inicio/ic_tel.png',
-                        width: 20, height: 20),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                    child: TextoTelefono(),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
-                    child: Image.asset('assets/iconos_inicio/ic_messenger.png',
-                        width: 20, height: 20),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                    child: TextoMessenger(),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              subtitulos("Misión"),
-              SizedBox(
-                height: 5,
-              ),
-              textos(
-                  "El Colegio Nacional de Educación Profesional Técnica, tiene como Misión, formar mediante un modelo basado en competencias, a Profesionales Técnicos y Profesionales Técnicos Bachiller, capacita y evalúa con fines de certificación de competencias laborales y servicios tecnológicos para atender las necesidades del sector productivo del país."),
-              SizedBox(
-                height: 40.0,
-              ),
-            ],
-          ),
+            ),
+          ), ),
+          Container(
+            
+            width: MediaQuery.of(context).size.width,
+            color: Colors.white,
+            child:Row(
+          children: <Widget>[
+            Expanded(child:
+              Column(children: <Widget>[
+                Image.asset("assets/iconos_menu/icon_home.png",height: 20,),
+                Center(child: Text("Inicio"),),
+                
+              ],),    
+            
+            ),
+            Expanded(child:
+                Column(children: <Widget>[
+                  FloatingActionButton(
+                      child: Image.asset("assets/iconos_tutorial/ic_redes.png",height: 20,),
+                      backgroundColor: Colors.pinkAccent,
+                      mini: true,
+                      onPressed: () => displayBottomSheet(context),
+
+                      heroTag: "social",),
+                  SizedBox(height: 10,),
+                ],),
+
+            ),
+            Expanded(child:
+                Column( children: <Widget>[
+                  Image.asset("assets/iconos_menu/ic_calificaciones.png",height: 20,),
+                  Text("Calificaciones"),
+                ],),
+            
+            ),
+
+          ],
         ),
+
+          ),
+        ],
       ),
+
       floatingActionButton: MenuButtonFloating(
         menuList: floatMenuList,
         callback:this,
@@ -302,8 +347,56 @@ class InicioScreen extends StatelessWidget implements FloatingMenuCallback {
         }
 
       }
-
-
     }
+  }
+
+  void displayBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (ctx) {
+          return Container(
+            height: MediaQuery.of(context).size.height  * 0.18,
+            child: Container(
+              color: Colors.white,
+              child: Column(
+                children: <Widget>[
+
+                  SizedBox(height: 10,),
+                  Text("Redes Sociales",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
+                  SizedBox(height: 10,),
+
+                  Row(children: <Widget>[
+                    Expanded(child: Column(children: <Widget>[
+                      Image.asset("assets/iconos_redessociales/ic_facebook.png",height: 40,),
+                      SizedBox(width: 15,),
+                      Center(child: Text("Facebook"),),
+
+                    ],),),
+
+                    Expanded(child: Column(children: <Widget>[
+
+                      Image.asset("assets/iconos_redessociales/ic_youtube.png",height: 40,),
+                      SizedBox(width: 15,),
+                      Center(child: Text("Youtube"),),
+
+                    ],),),
+
+
+                    Expanded(child: Column(children: <Widget>[
+
+                      Image.asset("assets/iconos_redessociales/ic_twitter.png",height: 40,),
+                      SizedBox(width: 15,),
+                      Center(child: Text("Twitter"),),
+
+                    ],),),
+
+                  ],),
+
+                ],
+              ),
+
+            ),
+          );
+        });
   }
 }
