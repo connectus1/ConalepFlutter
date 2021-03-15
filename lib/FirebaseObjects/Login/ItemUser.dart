@@ -2,6 +2,7 @@ class ItemUser{
 
   String nombre;
   String correo;
+
   String contra;
   String plantel;
 

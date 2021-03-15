@@ -9,6 +9,7 @@ class TextoUbicacion extends StatefulWidget{
 }
 
 class TextoState extends State<TextoUbicacion>{
+  String txtUbicacion;
 
   List<String> direcciones = [
     'Avenida Rotaria, Unidad Hab Infonavit Arbustos #89817 Ciudad Mante, Tamaulipas', //Mante
@@ -24,7 +25,7 @@ class TextoState extends State<TextoUbicacion>{
 
   ];
 
-  int index = 0;
+  // int index = 0;
 
   @override
   void initState() {
@@ -32,17 +33,34 @@ class TextoState extends State<TextoUbicacion>{
   }
 
   loadIndex(){
-    Preferences preferences = Preferences();
-    preferences.indexPlantel().then((value) => {
+    Preferences _pref = Preferences();
+
+    _pref.getPlantel().then((value) => {
+
       setState((){
-        index = value;
+        switch(value){
+          case "Mante": txtUbicacion = '${direcciones.elementAt(0)}'; break;
+          case "Matamoros": txtUbicacion = '${direcciones.elementAt(1)}'; break;
+          case "Miguel Aleman": txtUbicacion = '${direcciones.elementAt(2)}'; break;
+          case "Nuevo Laredo": txtUbicacion = '${direcciones.elementAt(3)}'; break;
+          case "Rio Bravo": txtUbicacion= '${direcciones.elementAt(4)}'; break;
+          case "Reynosa": txtUbicacion= '${direcciones.elementAt(5)}'; break;
+          case "Tampico": txtUbicacion= '${direcciones.elementAt(6)}'; break;
+          case "Victoria": txtUbicacion = '${direcciones.elementAt(7)}'; break;
+          case "Cast Matamoros": txtUbicacion = '${direcciones.elementAt(8)}'; break;
+
+        }
+        // txtPhone = '${value}';
       }),
+
     });
+
   }
 
   @override
   Widget build(BuildContext context) {
-    return Text(direcciones.elementAt(index).toString(),style: TextStyle(),textAlign:TextAlign.justify,);
+    return Text('${txtUbicacion}',style: TextStyle(),textAlign:TextAlign.justify,);
+
   }
 
 

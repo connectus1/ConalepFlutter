@@ -46,9 +46,43 @@ class PageCarrerasState extends State<PageCarreras>{
   loadIndex(){
     Preferences preferences = Preferences();
 
-    preferences.indexPlantel().then((value) => {
+    preferences.getPlantel().then((value) => {
+
+
       setState((){
-        indexPlantel = value;
+          switch (value) {
+            case "Mante":
+              indexPlantel = 0;
+              break;
+            case "Matamoros":
+              indexPlantel = 1;
+              break;
+            case "Miguel Aleman":
+              indexPlantel = 2;
+              break;
+            case "Nuevo Laredo":
+              indexPlantel = 3;
+              break;
+            case "Rio Bravo":
+              indexPlantel = 4;
+              break;
+            case "Reynosa":
+              indexPlantel = 5;
+              break;
+            case "Tampico":
+              indexPlantel = 6;
+              break;
+            case "Victoria":
+              indexPlantel = 7;
+              break;
+            case "Cast Matamoros":
+              indexPlantel = 8;
+              break;
+          }
+
+
+
+        // indexPlantel = value;
       }),
     });
   }
@@ -57,7 +91,6 @@ class PageCarrerasState extends State<PageCarreras>{
   Widget build(BuildContext context) {
     double font_size = 14.0;
 
-    print(indexPlantel.toString());
     if(( indexPlantel == 0) || (indexPlantel == 3)){
       return PageView(
         scrollDirection: Axis.horizontal,
@@ -136,10 +169,86 @@ class PageCarrerasState extends State<PageCarreras>{
 
         ],
       );
-
+    //   return FutureBuilder<Widget>(
+    //     future: setPageView(),);
     }
 
   }
+
+  // Future<Widget> setPageView() async {
+  //
+  //   List<String> dataImages = [];
+  //   List<String> names = [];
+  //
+  //
+  //   switch(await Preferences().getPlantel()){
+  //     case "Mante":
+  //       names = ['Autotronica','Contabilidad','Informatica'];
+  //       dataImages = ['autotronica.png','contabilidad.png','programacion.png'];
+  //       break;
+  //
+  //     case "Matamoros":
+  //       names =  ['Contabilidad','Informatica','Mantenimiento De Sistemas Electronicos','Maquinas'];
+  //       dataImages = ['controldecalidad.png','programacion.png','mantenimientodesistemaselectronicos.png','maquinas.png'];//Carreras Matamoros
+  //       break;
+  //
+  //     case "Miguel Aleman":
+  //       names = ['Autotronica','Contabilidad','Informatica'];
+  //       dataImages = ['autotronica.png','contabilidad.png','programacion.png'];//Carreras Miguel Aleman
+  //       break;
+  //     case "Nuevo Laredo":
+  //       names = ['Contabilidad','Electromecanica','Informatica','Soporte y Mantenimiento De Computo'];
+  //       dataImages = ['contabilidad.png','electromecanica.png','programacion.png','soporteymantenimientodecomputo.png'];//Carreras Nuevo Laredo
+  //       break;
+  //     case "Rio Bravo":
+  //       names = ['Informatica','Autotronica','Motores a Diesel','Refrigeracion y Climatizacion'];
+  //       dataImages =  ['progrmacion.png','autotronica.png','motoresadiesel.png','clima.png'];//Carreras Rio Bravo
+  //       break;
+  //     case "Reynosa":
+  //       names =  ['Asistente Directivo','Electromecanica','Informatica','Mantenimiento de Siststemas Electronicos'];
+  //       dataImages = ['asistentedirectivo.png','electromecanica.png','programacion.png','mantenimientodesiststemaselectronicos.png'];//Datos Reynosa
+  //       break;
+  //     case "Tampico":
+  //       names = ['Autotronica','Construccion','Informatica','Quimica'];
+  //       dataImages = ['autotronica.png','construccion.png','programacion.png','quimica.png'];//Carrerras Tampico
+  //       break;
+  //     case "Victoria":
+  //       names = ['Administracion','Expresion Grafica Digital','Informatica','Mantenimiento de Automotriz'];
+  //       dataImages = ['administracion.png','expresiongraficadigital.png','programacion.png','mantenimientoautomovil.png'];//Carreras Victoria
+  //       break;
+  //     case "Cast Matamoros": dataImages = [''];//Cast Matamoros
+  //   }
+  //
+  //   return FutureBuilder(
+  //     initialData: dataImages,
+  //     builder: (BuildContext context, AsyncSnapshot<List<String>> data){
+  //       if(dataImages == null)
+  //         print("si");
+  //
+  //       print(data.hasData);
+  //       print(data.connectionState);
+  //       // if(data.connectionState){
+  //       //
+  //       // }
+  //       return ListView.builder(
+  //         itemCount: data.data.length,
+  //         scrollDirection: Axis.vertical,
+  //         itemBuilder: (BuildContext context, int index){
+  //           List<String> datos = data.data;
+  //
+  //           return  Center(
+  //             child:Column(
+  //               children: [
+  //                 Image.asset('assets/iconos_carreras/' + (datos.elementAt(index)).toString() ,height: 135.0,),
+  //                 Text('${names.elementAt(index)}',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14.0),),
+  //               ],
+  //             ),
+  //           );
+  //
+  //         },
+  //       );
+  //     },
+  //   );
 
 
 }

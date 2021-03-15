@@ -1,3 +1,4 @@
+import 'package:Conalep360/ChatScreen.dart';
 import 'package:Conalep360/PoliticaDePrivacidadScreen.dart';
 import 'package:Conalep360/RecorridoVirtualScreen.dart';
 import 'package:Conalep360/SettingsScreen.dart';
@@ -7,10 +8,10 @@ import 'package:flutter/material.dart';
 import 'GoogleMapScreen.dart';
 import 'InicioScreen.dart';
 
+import 'NoticiasScreen.dart';
 import 'PreferencesClass.dart';
 
 class HomeScreen extends StatefulWidget {
-
   @override
   HomeState createState() => HomeState();
 
@@ -20,6 +21,8 @@ class HomeState extends State<HomeScreen>{
   int select_drawer = 0;
   double size_icon = 23;
 
+  bool alumno = false;
+
   _getDrawerItemWidget(int position){
 
     switch(position){
@@ -28,6 +31,7 @@ class HomeState extends State<HomeScreen>{
       case 2: return RecorridoVirtualScreen();
       case 3: return SettingScreen();
       case 4: return PoliticaDePrivacidadScreen();
+      case 5: return NoticiaScreen();
     }
 
   }
@@ -39,6 +43,7 @@ class HomeState extends State<HomeScreen>{
       case 2: return "Conalep 360";
       case 3: return "Ajustes";
       case 4: return "Politica De Privacidad";
+      case 5: return "Noticias";
     }
 
   }
@@ -49,22 +54,45 @@ class HomeState extends State<HomeScreen>{
     });
   }
 
-  void _showErrorSnackBar() {
-    Scaffold.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Oops... the URL couldn\'t be opened!'),
-      ),
-    );
-  }
-
-
   @override
-  void initState() {
-    Preferences _pref = Preferences();
-    _pref.indexPlantel().then((value) => (){
-      position = value;
-    });
+  void initState(){
+   _getPlantel();
+   _getAlumno();
   }
+
+  _getAlumno() async{
+    Preferences _pref = Preferences();
+    String data = await _pref.getType();
+
+    if(data.compareTo("Alumnos") == 0)
+      setState(() {
+        alumno = true;
+      });
+
+  }
+
+  _getPlantel() async {
+    Preferences _pref = await Preferences();
+    String value = await _pref.getPlantel();
+    int _position = 0;
+
+    switch(value){
+      case "Mante": _position = 0; break;
+      case "Matamoros": _position = 1; break;
+      case "Miguel Aleman": _position = 2; break;
+      case "Nuevo Laredo": _position = 3; break;
+      case "Rio Bravo": _position = 4; break;
+      case "Reynosa":_position = 5; break;
+      case "Tampico":_position = 6; break;
+      case "Victoria": _position = 7; break;
+      case "Cast Matamoros": _position = 8; break;
+    }
+    setState(() {
+      position = _position;
+    });
+
+  }
+
 
   deleteUser(BuildContext context){
       Preferences _pref = Preferences();
@@ -72,26 +100,10 @@ class HomeState extends State<HomeScreen>{
   }
 
   int position = 0;
-  setUrl(int position){
 
-    switch (position) {
-      case 0: return 'https://plantelmante.firebaseapp.com/';
-      case 1: return 'https://plantelmatamoros.firebaseapp.com/';
-      case 2: return 'https://plantelmiguel.firebaseapp.com/';
-      case 3: return 'https://plantelnuevolaredo.firebaseapp.com/';
-      case 4: return 'https://plantelriobravo.firebaseapp.com/';
-      case 5: return 'https://plantelreynosa.firebaseapp.com/';
-      case 6: return 'https://planteltampico.firebaseapp.com/';
-      case 7: return 'https://plantelvictoria.firebaseapp.com/';
-      case 8: return 'https://castmatamoros.firebaseapp.com/';
-    }
-
-  }
 
   @override
   Widget build(BuildContext context) {
-
-
     return MaterialApp(
       home:  new Scaffold(
         appBar: AppBar(
@@ -99,7 +111,11 @@ class HomeState extends State<HomeScreen>{
           actions: <Widget>[
               IconButton(
                 icon: Image.asset("assets/iconos_tutorial/ic_chat.png"),
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => Chat(position),
+                  ));
+                },
               ),
 
           ],
@@ -119,44 +135,61 @@ class HomeState extends State<HomeScreen>{
                         ),
                       ),
                     )),
-
                 ListTile(
                   leading: Image.asset('assets/iconos_menu/icon_home.png',width: size_icon, height: size_icon,),
                   title: Text('Inicio'),
-                  onTap: (){_onSelectItem(0);},
+                  onTap: () => _onSelectItem(0),
                 ),
                 ListTile(
                   leading: Image.asset('assets/iconos_menu/ic_puntero.png',width: size_icon, height: size_icon,),
                   title: Text('Mapa'),
-                  onTap: (){_onSelectItem(1);},
+                  onTap: ()=>_onSelectItem(1),
                 ),
-
-
                 ListTile(
                   leading: Image.asset('assets/iconos_menu/icono360.png',width: size_icon, height: size_icon,),
                   title: Text('Conalep 360°'),
-                  onTap: (){_onSelectItem(2);},
+                  onTap: () => _onSelectItem(2),
                 ),
 
-                // ListTile(
-                //   leading: Image.asset('assets/iconos_menu/icon_info.png',width: size_icon, height: size_icon,),
-                //   title: Text('Informacion'),
-                // ),
+                ListTile(
+                  leading: Image.asset('assets/iconos_menu/ic_noticias.png',width: size_icon, height: size_icon,),
+                  title: Text('Noticias'),
+                  onTap: () => _onSelectItem(5),
+                ),
+
+
+                //---------------------
+                //Seccion de politicas de la aplicacion
+                //---------------------
+                ListTile(
+                  title: Text("Politicas",style: TextStyle(color: Colors.grey,fontSize: 14),),
+                ),
+                ListTile(
+                  // contentPadding: EdgeInsets.symmetric(vertical: 0),
+                  leading: Image.asset('assets/iconos_menu/ic_info.png',width: size_icon, height: size_icon,),
+                  title: Text('Politica de privacidad'),
+                  onTap: () => _onSelectItem(4),
+
+                  // {
+                  //   _onSelectItem(4);
+                  // },
+                ),
+
+                //---------------------
+                //Seccion de configuracion
+                //---------------------
+                ListTile(
+                  title: Text("Configuracion",style: TextStyle(color: Colors.grey,fontSize: 14),),
+                ),
                 ListTile(
                   leading: Image.asset('assets/iconos_menu/ic_settings.png',width: size_icon, height: size_icon,),
                   title: Text('Ajustes'),
-                  onTap: (){_onSelectItem(3);},
+                  onTap: () => _onSelectItem(3),
                 ),
 
-                ListTile(
-                  leading: Image.asset('assets/iconos_menu/ic_info.png',width: size_icon, height: size_icon,),
-                  title: Text('Politica de privacidad'),
-                  onTap: (){
-                    _onSelectItem(4);
-                  },
-                ),
 
                 ListTile(
+                  leading: Image.asset('assets/iconos_menu/ic_logout.png',width: size_icon, height: size_icon,),
                   title: Text("Cerrar Sesión"),
                   onTap: (){
                     deleteUser(context);
@@ -167,6 +200,25 @@ class HomeState extends State<HomeScreen>{
           ),
         ),
         body: _getDrawerItemWidget(select_drawer),
+        // bottomNavigationBar: Container(
+        //   child: B,
+        // ),
+        // BottomNavigationBar(),
+        // Expanded(
+        //   child: Container(
+        //     child: Row(
+        //       children: <Widget>[
+        //         Image.asset("assets/iconos_menu/icon_home.png"),
+        //         FloatingActionButton(
+        //           child: Image.asset("assets/iconos_tutorial/ic_redes.png"),
+        //           backgroundColor: Colors.pinkAccent,
+        //           mini: true,
+        //             onPressed: (){}),
+        //         Image.asset("assets/iconos_tutorial/ic_alerta.png"),
+        //       ],
+        //     ),
+        //   ),
+        // ),
       ),
       theme: ThemeData(
 
@@ -178,7 +230,6 @@ class HomeState extends State<HomeScreen>{
       ),
     );
 
-      // MyApp(MediaQuery.of(context).size.width * 0.6);
   }
 
 

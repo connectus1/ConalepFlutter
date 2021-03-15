@@ -1,7 +1,9 @@
-import 'package:Conalep360/LoginScreen.dart';
+import 'package:Conalep360/ObjectsLogin/FirebaseLoginVisitante.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
+import 'ObjectsLogin/FirebaseLoginAlumno.dart';
+import 'ObjectsLogin/FirebaseLoginTutor.dart';
 
 class TypeUserScreen extends StatelessWidget{
   @override
@@ -19,7 +21,6 @@ class TypeUserScreen extends StatelessWidget{
                 ),
               ),
             ),
-
 
             Center(child: Padding(
               padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 0.0),
@@ -41,54 +42,241 @@ class TypeUserScreen extends StatelessWidget{
             ),
 
             SizedBox(height: 40,),
-            InkWell(
-              child: Container(
-                height: 55,
-                width: MediaQuery.of(context).size.width * 0.8,
-                padding: EdgeInsets.fromLTRB(0, 0.0, 0, 0.0),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
+            MaterialButton(
+                padding: EdgeInsets.symmetric(horizontal: 50),
+                child:Card(
+                  elevation: 10,
+                  margin: EdgeInsets.symmetric(vertical: 10),
+                  // padding: EdgeInsets.fromLTRB(5, 0.0, 5.0, 0.0),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0),),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                        alignment: Alignment.centerLeft,
+                        child: Image.asset('assets/iconos_type/alumno.png',height: 30,),
+                      ),
+
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        alignment: Alignment.centerLeft,
+                        child: Text("Alumno",textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
+
+                        ),
+                      ),
+
+                    ],
+
                   ),
-                  child:
-                  Container(child: Text("Alumno",textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
+                ),
+                onPressed: (){
+                  loginAlumno(context);
+                }),
+
+            // InkWell(
+            //   child: Container(
+            //     height: 55,
+            //     width: MediaQuery.of(context).size.width * 0.8,
+            //     padding: EdgeInsets.fromLTRB(0, 0.0, 0, 0.0),
+            //     child: Card(
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(15.0),
+            //       ),
+            //       child: Container(
+            //         alignment: Alignment.centerLeft,
+            //         child: Row(
+            //         crossAxisAlignment: CrossAxisAlignment.center,
+            //         children: <Widget>[
+            //           Container(
+            //             alignment: Alignment.center,
+            //             child: Image.asset('assets/iconos_type/alumno.png'),
+            //           ),
+            //           Text("Alumno",textAlign: TextAlign.center,
+            //             style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
+            //           ),
+            //         ],
+            //       ),
+            //
+            //       // Text("Alumno",textAlign: TextAlign.center,
+            //       //     style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
+            //       //   ),
+            //
+            //         padding: EdgeInsets.fromLTRB(0, 10, 0, 0.0),
+            //       ),
+            //
+            //     ),
+            //   ),
+            //   onTap: (){
+            //     loginAlumno(context);
+            //   },
+            // ),
+
+            MaterialButton(
+                padding: EdgeInsets.symmetric(horizontal: 50),
+                child:Card(
+                  elevation: 10,
+                  margin: EdgeInsets.symmetric(vertical: 10),
+                  // padding: EdgeInsets.fromLTRB(5, 0.0, 5.0, 0.0),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0),),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                        alignment: Alignment.centerLeft,
+                        child: Image.asset('assets/iconos_type/tutor.png',height: 30,),
+                      ),
+
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        alignment: Alignment.centerLeft,
+                        child: Text("Tutor",textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
+
+                        ),
+                      ),
+
+                    ],
+
+                  ),
+                ),
+                onPressed: (){
+                  loginTutor(context);
+                }),
+
+            //
+            // InkWell(
+            //   child: Container(
+            //     height: 55,
+            //     width: MediaQuery.of(context).size.width * 0.8,
+            //     padding: EdgeInsets.fromLTRB(0, 0.0, 0, 0.0),
+            //     child: Card(
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(15.0),
+            //       ),
+            //
+            //       child: Container(
+            //         alignment: Alignment.centerLeft,
+            //         child: Row(
+            //           crossAxisAlignment: CrossAxisAlignment.center,
+            //           children: <Widget>[
+            //             Container(
+            //               alignment: Alignment.center,
+            //               child: Image.asset('assets/iconos_type/tutor.png'),
+            //             ),
+            //             Text("Alumno",textAlign: TextAlign.center,
+            //               style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
+            //             ),
+            //           ],
+            //         ),
+            //       ),
+            //
+            //       // child:
+            //       // Container(child: Text("Tutor",textAlign: TextAlign.center,
+            //       //   style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
+            //       // ),
+            //       //   padding: EdgeInsets.fromLTRB(0, 10, 0, 0.0),
+            //       // ),
+            //
+            //
+            //     ),
+            //   ),
+            //   onTap: (){
+            //     loginTutor(context);
+            //   },
+            // ),
+
+            MaterialButton(
+              padding: EdgeInsets.symmetric(horizontal: 50),
+              child:Card(
+                elevation: 10,
+                margin: EdgeInsets.symmetric(vertical: 10),
+                // padding: EdgeInsets.fromLTRB(5, 0.0, 5.0, 0.0),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0),),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                      alignment: Alignment.centerLeft,
+                      child: Image.asset('assets/iconos_type/visita.png',height: 30,),
                     ),
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0.0),
-                  ),
 
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      alignment: Alignment.centerLeft,
+                      child: Text("Visita",textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
 
-                ),
-              ),
-              onTap: (){
-                loginScreen(context, true);
-              },
-            ),
+                      ),
+                    ),
 
-            SizedBox(height: 30,),
-                InkWell(
-                child: Container(
-                height: 55,
-                width: MediaQuery.of(context).size.width * 0.8,
-                padding: EdgeInsets.fromLTRB(0, 0.0, 0, 0.0),
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  child:
-                  Container(child: Text("Visitante",textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
-                  ),
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0.0),
-                  ),
-
+                  ],
 
                 ),
               ),
-              onTap: (){
-              loginScreen(context, true);
-              },
-              ),
+                onPressed: (){
+              loginVisita(context);
+            }),
+
+            // SizedBox(height: 30,),
+            //     InkWell(
+            //     child: Container(
+            //     height: 55,
+            //     width: MediaQuery.of(context).size.width * 0.8,
+            //     padding: EdgeInsets.fromLTRB(0, 0.0, 0, 0.0),
+            //     child: Card(
+            //       shape: RoundedRectangleBorder(
+            //         borderRadius: BorderRadius.circular(15.0),
+            //       ),
+            //       // child:
+            //       child: Container(
+            //       alignment: Alignment.centerLeft,
+            //       child: Row(
+            //
+            //         crossAxisAlignment: CrossAxisAlignment.center,
+            //         children: <Widget>[
+            //
+            //           Container(
+            //             alignment: Alignment.center,
+            //             child: Image.asset('assets/iconos_type/visita.png',height: 100,),
+            //           ),
+            //           Container(
+            //             alignment: Alignment.centerLeft,
+            //             child: Text("Visita",textAlign: TextAlign.center,
+            //               style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
+            //
+            //             ),
+            //           ),
+            //           // Center(child:
+            //           //   Text("Alumno",textAlign: TextAlign.center,
+            //           //     style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
+            //           //
+            //           //   ),
+            //           // )
+            //
+            //         ],
+            //       ),
+            //       ),
+            //
+            //       // Container(child: Text("Visitante",textAlign: TextAlign.center,
+            //       //   style: TextStyle(fontSize: 15,fontWeight: FontWeight.bold),
+            //       // ),
+            //       //   padding: EdgeInsets.fromLTRB(0, 10, 0, 0.0),
+            //       // ),
+            //
+            //
+            //     ),
+            //   ),
+            //   onTap: (){
+            //   loginVisita(context);
+            //   },
+            //   ),
 
 
           ],
@@ -99,13 +287,22 @@ class TypeUserScreen extends StatelessWidget{
   //-------------------
   //Se encarga de reemplazar fragment actual
   //--------------------
-  void loginScreen(BuildContext context,bool type){
+  void loginAlumno(BuildContext context){
     Navigator.push(context,MaterialPageRoute(
-          builder: (context) => LoginScreen(
-            typeUser: type,
-          )),
+          builder: (context) => FirebaseLoginAlumno()),
     );
+  }
 
+  void loginTutor(BuildContext context){
+    Navigator.push(context,MaterialPageRoute(
+        builder: (context) => FirebaseLoginTutor()),
+    );
+  }
+
+  void loginVisita(BuildContext context){
+    Navigator.push(context,MaterialPageRoute(
+        builder: (context) => FirebaseLoginVisitante()),
+    );
   }
 
 
