@@ -18,9 +18,10 @@ class ListaState extends State<ListaPlantel>{
 
 
   //Guarda el indice del plantel seleccionado
-  Future guardarIndex(int index) async{
+  guardarIndex(String plantel) async{
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    await preferences.setInt('index', index);//Guarda el indice del DropDownButton
+    await preferences.setString("plantel", plantel);
+    // await preferences.setInt('index', index);//Guarda el indice del DropDownButton
 
   }
 
@@ -51,7 +52,8 @@ class ListaState extends State<ListaPlantel>{
 
       onChanged: (String newValue) {
         setState(() {
-          guardarIndex(_plantel.indexOf(newValue));
+          // print(newValue);
+          guardarIndex(newValue);
           oneElement = newValue;
         });
       },

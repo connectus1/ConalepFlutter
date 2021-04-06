@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'DialogNoticia.dart';
 import 'Noticia.dart';
 
 List<Noticia> noticias = new List();
@@ -21,10 +22,25 @@ class ListViewNoticia extends StatefulWidget{
   @override
   ViewState createState() => state;
 
+  addNoticia(Noticia noticia) => state.addNoticia(noticia);
 }
 
 class ViewState extends State<ListViewNoticia>{
 
+  addNoticia(Noticia noticia) {
+    bool flag = true;
+
+    for (int i = 0; i < noticias.length && flag; i++) {
+      if (noticias.elementAt(i).toString().compareTo(noticia.toString()) == 0) {
+        flag = false;
+      }
+    }
+    if (flag) {
+      setState(() {
+        noticias.add(noticia);
+      });
+    }
+  }
   //Variable que apunta a la clase DatabaseProvier
   // var db = DatabaseProvider();
 
@@ -32,23 +48,11 @@ class ViewState extends State<ListViewNoticia>{
   //Cuando inicie el estado del widget
   @override
   void initState() {
-    _loadPlantel();
+    // _loadPlantel();
     // _loadMensajes();
   }
 
-  setUrl(String data){
-    switch (data) {
-      case "Mante": return 'https://conalep360-mante.firebaseio.com/';
-      case "Matamoros":  return 'https://conalep360-matamoros.firebaseio.com/';
-      case "Miguel Aleman": return 'https://conalep360-miguelaleman.firebaseio.com/';
-      case "Nuevo Laredo": return 'https://conalep360-nuevolaredo.firebaseio.com/';
-      case "Rio Bravo": return 'https://conalep360-reynosa.firebaseio.com/';
-      case "Reynosa": return 'https://conalep360-riobravo.firebaseio.com/';
-      case "Tampico": return 'https://conalep360-tampico.firebaseio.com/';
-      case "Victoria": return 'https://conalep360-victoria.firebaseio.com/';
-      case "Cast Matamoros": return 'https://conalep360-cast.firebaseio.com/';
-    }
-  }
+
   
 
   //Metodo asyncrono que carga los mensajes y despues establece el estado de un objeto
@@ -57,15 +61,15 @@ class ViewState extends State<ListViewNoticia>{
   //   Noticias = await db.getMessages();
   // }
   
-  _loadPlantel() async{
-    Preferences _pref = Preferences();
-    String plantel = await _pref.getPlantel();
-
-    setState(() {
-      urlDatabase = setUrl(plantel);
-    });
-
-  }
+  // _loadPlantel() async{
+  //   Preferences _pref = Preferences();
+  //   String plantel = await _pref.getPlantel();
+  //
+  //   setState(() {
+  //     urlDatabase = setUrl(plantel);
+  //   });
+  //
+  // }
   
   //Metodo utilizado para agregar mensajes al arreglo
   // addNoticia(Noticia noticia){
@@ -74,58 +78,127 @@ class ViewState extends State<ListViewNoticia>{
   //   });
   // }
 
-  getNoticias() async {
-    ref.child("Noticias").once().then((DataSnapshot data) {
-      if (data.value != null) {
-        Map<dynamic, dynamic> map = data.value;
-
-        for (int i = 0; i < map.length; i++) {
-
-
-          Noticia noticia = new Noticia(
-              fecha: map.values.toList()[i]['fecha'],
-              titulo: map.values.toList()[i]['titulo'],
-              noticia: map.values.toList()[i]['noticia'],
-              url: map.values.toList()[i]['url']);
-
-          noticias.add(noticia);
-
-          //Si el mensaje proviene de la institucion entonces se guarda el mensahe
-          // if(mensaje.nombre.compareTo("CONALEP") == 0 ){
-          //   guardarMensaje(mensaje);
-          //   _chat.addMessage(mensaje);
-          //
-          //   ref.child("Chat").child(idUser).child(map.keys.elementAt(i)).remove();//Como ya se agrego al SQL se elimina de Firebase
-          // }
-
-        }
-      }
-    });
-
-  }
+  // getNoticias() async {
+  //   ref.child("Noticias").once().then((DataSnapshot data) {
+  //     if (data.value != null) {
+  //       Map<dynamic, dynamic> map = data.value;
+  //
+  //       for (int i = 0; i < map.length; i++) {
+  //
+  //
+  //         Noticia noticia = new Noticia(
+  //             fecha: map.values.toList()[i]['fecha'],
+  //             titulo: map.values.toList()[i]['titulo'],
+  //             noticia: map.values.toList()[i]['noticia'],
+  //             url: map.values.toList()[i]['url']);
+  //
+  //         noticias.add(noticia);
+  //
+  //         //Si el mensaje proviene de la institucion entonces se guarda el mensahe
+  //         // if(mensaje.nombre.compareTo("CONALEP") == 0 ){
+  //         //   guardarMensaje(mensaje);
+  //         //   _chat.addMessage(mensaje);
+  //         //
+  //         //   ref.child("Chat").child(idUser).child(map.keys.elementAt(i)).remove();//Como ya se agrego al SQL se elimina de Firebase
+  //         // }
+  //
+  //       }
+  //     }
+  //   });
+  //
+  // }
 
   @override
   Widget build(BuildContext context) {
-    ref = FirebaseDatabase(databaseURL: urlDatabase).reference();
-    getNoticias();
 
-    return (noticias.length == 0)? Center(child: Text("Sin Noticias..."),) :
-    ListView.builder(
+    // getNoticias();
+
+    return ListView.builder(
         itemCount: noticias.length,
         shrinkWrap: true,
         reverse: true,
         itemBuilder: (BuildContext context, int index){
-
-          return Container(
-            child: Row(children: <Widget>[
-                CircleAvatar(child: Image.network(noticias.elementAt(index).url),),
-                Column(children: <Widget>[
-                  Text(noticias.elementAt(index).titulo),
-                  Text(noticias.elementAt(index).fecha),
-                ],)
-                // SizedBox(height: 20,)
-              ],),
+          return Card(
+            elevation: 5,
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: <Widget>[
+                    SizedBox(
+                      width: 10,
+                    ),
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        noticias.elementAt(index).url,
+                      ),
+                      radius: 20,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.70,
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            child: Text(
+                              noticias.elementAt(index).titulo,
+                              style: TextStyle(
+                                  fontSize: 15, fontWeight: FontWeight.bold),
+                            ),
+                            alignment: Alignment.centerLeft,
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            child: Text(
+                              noticias.elementAt(index).fecha,
+                              textAlign: TextAlign.end,
+                              style: TextStyle(fontStyle: FontStyle.italic),
+                            ),
+                            alignment: Alignment.centerRight,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    InkWell(
+                      child: Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 15,
+                      ),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                DialogNoticia(noticias.elementAt(index))));
+                      },
+                    ),
+                    // Container(child: ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+              ],
+            ),
           );
+          // return Container(
+          //   child: Row(children: <Widget>[
+          //       CircleAvatar(child: Image.network(noticias.elementAt(index).url),),
+          //       Column(children: <Widget>[
+          //         Text(noticias.elementAt(index).titulo),
+          //         Text(noticias.elementAt(index).fecha),
+          //       ],)
+          //       // SizedBox(height: 20,)
+          //     ],),
+          // );
           //Verifica que el nombre sea
           // if (Noticias.elementAt((Noticias.length-1)-index).nombre.compareTo("CONALEP") == 0) {
           //   return _crearItem(context, Noticias.elementAt((Noticias.length-1) - index));

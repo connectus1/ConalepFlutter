@@ -3,18 +3,18 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class PoliticaDePrivacidadScreen extends StatefulWidget{
+class YoutubeScreen extends StatefulWidget{
   @override
-  PoliticaState createState()  => PoliticaState();
+  YoutubeState createState() => YoutubeState();
 }
 
-class PoliticaState extends State<PoliticaDePrivacidadScreen>{
+class YoutubeState extends State<YoutubeScreen>{
   Completer<WebViewController> _controller = Completer<WebViewController>();
 
   @override
   Widget build(BuildContext context) {
-    return WebView(
-      initialUrl: "https://sites.google.com/view/politicadeprivacidadconalep360/p%C3%A1gina-principal",
+    return  WebView(
+      initialUrl: "https://www.youtube.com/user/CONALEPON",
       javascriptMode: JavascriptMode.unrestricted,
       onWebViewCreated: (WebViewController webViewController) {
         _controller.complete(webViewController);

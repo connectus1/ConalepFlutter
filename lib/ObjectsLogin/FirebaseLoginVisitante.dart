@@ -1,13 +1,12 @@
 import 'package:Conalep360/Animation/FadeAnimation.dart';
 import 'package:Conalep360/FirebaseObjects/Login/ItemUser.dart';
+import 'package:Conalep360/ObjectsHome/HomeVisita.dart';
 import 'package:Conalep360/ObjectsRegistro/RegistroVisitas/RegisterVisita.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../HomeScreen.dart';
 
 //-----------------------
 //Atributos de la clase
@@ -252,7 +251,7 @@ class FirebaseLoginVisitante extends StatelessWidget{
 
           saveData(user, map.keys.first);
           Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (BuildContext context) => HomeScreen())
+            MaterialPageRoute(builder: (BuildContext context) => HomeVisita())
             , ModalRoute.withName('/'),);
 
           // Navigator.of(context).pushReplacement(MaterialPageRoute(

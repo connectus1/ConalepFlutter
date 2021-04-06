@@ -2,10 +2,8 @@ import 'package:Conalep360/PreferencesClass.dart';
 import 'package:flutter/cupertino.dart';
 
 class PageCarreras extends StatefulWidget{
-
   @override
   PageCarrerasState createState() => PageCarrerasState();
-
 }
 
 class PageCarrerasState extends State<PageCarreras>{
@@ -26,6 +24,7 @@ class PageCarrerasState extends State<PageCarreras>{
     ['administracion.png','expresiongraficadigital.png','programacion.png','mantenimientoautomovil.png'], //Carreras Victoria
     [''],//Cast Matamoros
   ];
+
   List<List> name_carreras = [
     ['Autotronica','Contabilidad','Informatica'],
     ['Contabilidad','Informatica','Mantenimiento De Sistemas Electronicos','Maquinas'],
@@ -43,48 +42,40 @@ class PageCarrerasState extends State<PageCarreras>{
     loadIndex();
   }
 
-  loadIndex(){
+  loadIndex() async{
     Preferences preferences = Preferences();
+    String value = await preferences.getPlantel();
+    switch (value) {
+      case "Mante": setState(() {indexPlantel = 0;});
+        break;
+      case "Matamoros":setState(() {indexPlantel = 1;});
+        break;
+      case "Miguel Aleman":setState(() {indexPlantel = 2;});
+        break;
+      case "Nuevo Laredo":setState(() {indexPlantel = 3;});
+        break;
+      case "Rio Bravo":setState(() {indexPlantel = 4;});
+        break;
+      case "Reynosa":setState(() {indexPlantel = 5;});
+        break;
+      case "Tampico":setState(() {indexPlantel = 6;});
+        break;
+      case "Victoria":setState(() {indexPlantel = 7;});
+        break;
+      case "Cast Matamoros":setState(() {indexPlantel = 8;});
+        break;
+    }
 
-    preferences.getPlantel().then((value) => {
-
-
-      setState((){
-          switch (value) {
-            case "Mante":
-              indexPlantel = 0;
-              break;
-            case "Matamoros":
-              indexPlantel = 1;
-              break;
-            case "Miguel Aleman":
-              indexPlantel = 2;
-              break;
-            case "Nuevo Laredo":
-              indexPlantel = 3;
-              break;
-            case "Rio Bravo":
-              indexPlantel = 4;
-              break;
-            case "Reynosa":
-              indexPlantel = 5;
-              break;
-            case "Tampico":
-              indexPlantel = 6;
-              break;
-            case "Victoria":
-              indexPlantel = 7;
-              break;
-            case "Cast Matamoros":
-              indexPlantel = 8;
-              break;
-          }
-
-
-
-        // indexPlantel = value;
-      }),
-    });
+    // preferences.getPlantel().then((value) => {
+    //   setState((){
+    //
+    //
+    //
+    //
+    //     // indexPlantel = value;
+    //   }),
+    // }
+    // );
   }
 
   @override
@@ -115,7 +106,6 @@ class PageCarrerasState extends State<PageCarreras>{
             ),
           ),
           Center(
-
             child:Column(
               children: [
                 Image.asset('assets/iconos_carreras/' + (datos.elementAt(indexPlantel).elementAt(2)).toString(),height: 135.0, ),
@@ -123,56 +113,52 @@ class PageCarrerasState extends State<PageCarreras>{
               ],
             ),
           ),
-
-        ],
-      );
-    }else{
-      return PageView(
-        scrollDirection: Axis.horizontal,
-        children: <Widget>[
-          Center(
-
-            child:Column(
-              children: [
-                Image.asset('assets/iconos_carreras/' + (datos.elementAt(indexPlantel).elementAt(0)).toString() ,height: 135.0,),
-                Text(name_carreras.elementAt(indexPlantel).elementAt(0),style: TextStyle(fontWeight: FontWeight.bold,fontSize: font_size),),
-              ],
-            ),
-          ),
-          Center(
-
-            child:Column(
-              children: [
-                Image.asset('assets/iconos_carreras/' + (datos.elementAt(indexPlantel).elementAt(1)).toString() ,height: 135.0,),
-                Text(name_carreras.elementAt(indexPlantel).elementAt(1),style: TextStyle(fontWeight: FontWeight.bold,fontSize: font_size),),
-              ],
-            ),
-          ),
-          Center(
-
-            child:Column(
-              children: [
-                Image.asset('assets/iconos_carreras/' + (datos.elementAt(indexPlantel).elementAt(2)).toString() ,height: 135.0,),
-                Text(name_carreras.elementAt(indexPlantel).elementAt(2),style: TextStyle(fontWeight: FontWeight.bold,fontSize: font_size),),
-              ],
-            ),
-          ),
-          Center(
-
-            child:Column(
-              children: [
-                Image.asset('assets/iconos_carreras/' + (datos.elementAt(indexPlantel).elementAt(3)).toString() ,height: 135.0,),
-                Text(name_carreras.elementAt(indexPlantel).elementAt(3),style: TextStyle(fontWeight: FontWeight.bold,fontSize: font_size),),
-              ],
-            ),
-          ),
-
         ],
       );
     //   return FutureBuilder<Widget>(
     //     future: setPageView(),);
     }
+    else
+      return PageView(
+        scrollDirection: Axis.horizontal,
 
+        children: <Widget>[
+          Center(
+
+            child:Column(
+              children: [
+                Image.asset('assets/iconos_carreras/' + (datos.elementAt(indexPlantel).elementAt(0)).toString(),height: 135.0,),
+                Text(name_carreras.elementAt(indexPlantel).elementAt(0),style: TextStyle(fontWeight: FontWeight.bold,fontSize: font_size),)
+              ],
+            ),
+          ),
+          Center(
+
+            child:Column(
+              children: [
+                Image.asset('assets/iconos_carreras/' + (datos.elementAt(indexPlantel).elementAt(1)).toString(),height: 135.0,),
+                Text(name_carreras.elementAt(indexPlantel).elementAt(1),style: TextStyle(fontWeight: FontWeight.bold,fontSize: font_size),),
+              ],
+            ),
+          ),
+          Center(
+            child:Column(
+              children: [
+                Image.asset('assets/iconos_carreras/' + (datos.elementAt(indexPlantel).elementAt(2)).toString(),height: 135.0, ),
+                Text(name_carreras.elementAt(indexPlantel).elementAt(2),style: TextStyle(fontWeight: FontWeight.bold,fontSize: font_size),),
+              ],
+            ),
+          ),
+          Center(
+            child:Column(
+              children: [
+                Image.asset('assets/iconos_carreras/' + (datos.elementAt(indexPlantel).elementAt(3)).toString(),height: 135.0, ),
+                Text(name_carreras.elementAt(indexPlantel).elementAt(3),style: TextStyle(fontWeight: FontWeight.bold,fontSize: font_size),),
+              ],
+            ),
+          ),
+        ],
+      );
   }
 
   // Future<Widget> setPageView() async {

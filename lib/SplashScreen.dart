@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
 import 'HomeScreen.dart';
+import 'ObjectsHome/HomeVisita.dart';
 import 'TypeUserScreen.dart';
 
 
@@ -27,12 +28,22 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   //Metodo para dirigirse a la ventana de Home
-  void _navigationToHome(){
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (BuildContext context) => HomeScreen()
-        )
-    );
+  void _navigationToHome() async {
+    Preferences _pref = await Preferences();
+    String type = await _pref.getType();
+
+    if (type.compareTo("Visitas") == 0) {
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (BuildContext context) => HomeVisita()));
+    } else
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (BuildContext context) => HomeScreen()));
+
+    // Navigator.of(context).pushReplacement(
+    //     MaterialPageRoute(
+    //       builder: (BuildContext context) => HomeScreen()
+    //     )
+    // );
   }
 
   //Metodo para navegar al Screen de Typer User

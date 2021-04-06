@@ -21,7 +21,6 @@ class GeoLocation extends StatelessWidget{
   }
 
   Future<Position> _determinePosition() async {
-    print("Si");
 
     bool serviceEnabled;
     LocationPermission permission;
