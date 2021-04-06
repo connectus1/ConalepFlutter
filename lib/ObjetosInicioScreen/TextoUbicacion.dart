@@ -4,8 +4,6 @@ import 'package:flutter/cupertino.dart';
 class TextoUbicacion extends StatefulWidget{
   @override
   TextoState createState() => TextoState();
-
-
 }
 
 class TextoState extends State<TextoUbicacion>{

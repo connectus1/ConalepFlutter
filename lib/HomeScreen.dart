@@ -170,9 +170,6 @@ class HomeState extends State<HomeScreen>{
                   title: Text('Politica de privacidad'),
                   onTap: () => _onSelectItem(4),
 
-                  // {
-                  //   _onSelectItem(4);
-                  // },
                 ),
 
                 //---------------------
@@ -200,25 +197,7 @@ class HomeState extends State<HomeScreen>{
           ),
         ),
         body: _getDrawerItemWidget(select_drawer),
-        // bottomNavigationBar: Container(
-        //   child: B,
-        // ),
-        // BottomNavigationBar(),
-        // Expanded(
-        //   child: Container(
-        //     child: Row(
-        //       children: <Widget>[
-        //         Image.asset("assets/iconos_menu/icon_home.png"),
-        //         FloatingActionButton(
-        //           child: Image.asset("assets/iconos_tutorial/ic_redes.png"),
-        //           backgroundColor: Colors.pinkAccent,
-        //           mini: true,
-        //             onPressed: (){}),
-        //         Image.asset("assets/iconos_tutorial/ic_alerta.png"),
-        //       ],
-        //     ),
-        //   ),
-        // ),
+
       ),
       theme: ThemeData(
 

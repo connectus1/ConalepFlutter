@@ -71,17 +71,13 @@ class GoogleMapState extends State<GoogleMapScreen>{
         markers[markerId] = marker;
       });
 
-
-    }
-
     setState(() {
       _googleMap = GoogleMap(
         markers:Set<Marker>.of(markers.values),
-        initialCameraPosition: CameraPosition(target: _latLng,
-        zoom: 10),
+        initialCameraPosition: CameraPosition(target: _latLng,zoom: 10),
         minMaxZoomPreference: MinMaxZoomPreference(10,50),);
     });
-  }
+  }}
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +148,13 @@ class GoogleMapState extends State<GoogleMapScreen>{
                   SizedBox(width: 20,),
                   Icon(Icons.add_location,color: Colors.red,),
                   SizedBox(width: 10,),
-                  TextoUbicacion(),
+                  Expanded(
+                    child: TextoUbicacion(),
+                  ),
+                  SizedBox(
+                    width: 30,
+                  ),
+                  // TextoUbicacion(),
                   // Text("${direcBottom}"),
                 ],),
 
